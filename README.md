@@ -198,7 +198,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ```
 
 ##### Technique 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
-<i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
+##### <i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
 ``` 
 Example 1 - WorPress
 ---------------------
