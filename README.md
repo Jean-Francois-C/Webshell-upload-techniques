@@ -15,6 +15,7 @@ Technique 7. Webshell upload by exploiting a Website vulnerability such as:
 	     - OS command execution flaw
 	     - Remote Code Execution vulnerability
 	     - ...
+Technique 8. Webshell upload by exploing an insecure (writeable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
 Technique 8. Webshell upload using a Lotus Domino admin console
 Technique 9. Webshell upload using a Jenkins admin console
 Technique 10. ...
@@ -258,7 +259,7 @@ Example 2 - Kentico
           - ...
 ```
 
-##### Technique 7. Webshell upload by exploiting a RFI vulnerability
+##### Technique 7 - Webshell upload by exploiting a RFI vulnerability
 ```
 Example
 ➤ Step 1. Review the content (php settings) of the page "/phpinfo.php" (e.g., identified with dirbuster)
