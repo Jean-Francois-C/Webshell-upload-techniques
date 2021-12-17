@@ -219,6 +219,11 @@ Example 1 - WorPress
 ➤ Step 4. Upload of a Webshell 
           - Method 1 - Add a PHP webshell by editing a theme php page and adding the code of a PHP webshell (e.g. 404 error page)
           - Method 2 - Upload of a PHP webshell by using the WordPress plugin upload page
+	    Examples:
+	    + Go to 'https://website/wordpress-blog/wp-admin/plugin-install.php?tab=upload'
+	    + Then upload a PHP webshell (and not a zip file) 
+	    + Finally browse the webshell and execute OS commands
+	      > Https://website/wordpress-blog/wp-content/uploads/webshell.php?cmd=whoami
 ``` 
 ``` 
 Example 2 - Kentico
