@@ -15,10 +15,11 @@ Technique 7. Webshell upload by exploiting a Website vulnerability such as:
 	     - OS command execution flaw
 	     - Remote Code Execution vulnerability
 	     - ...
-Technique 8. Webshell upload by exploing an insecure (writeable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
-Technique 9. Webshell upload using a Lotus Domino admin console
-Technique 10. Webshell upload using a Jenkins admin console
-Technique 11. ...
+Technique 8. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
+Technique 9. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
+Technique 10. Webshell upload using a Lotus Domino admin console
+Technique 11. Webshell upload using a Jenkins admin console
+Technique 12. ...
 ```
 ##### Technique 1 - PHPMyAdmin Web console
 ```
