@@ -477,11 +477,11 @@ Example
 
 ##### Usefull links for Webshells
 ```
-➤ JAVA Webshell - https://github.com/SecurityRiskAdvisors/cmd.jsp
-➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
 ➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
 ➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
-➤ Various Webshells 
-  - https://github.com/tennc/webshell
-  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell
+➤ JAVA Webshell - https://github.com/SecurityRiskAdvisors/cmd.jsp
+➤ JAVA Webshell - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/jsp
+➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
+➤ PHP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php
+➤ Various Webshells - https://github.com/tennc/webshell
 ```
