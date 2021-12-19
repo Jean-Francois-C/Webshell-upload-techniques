@@ -248,7 +248,7 @@ Example
            - "http://x.x.x.x/application-name/Webshell.aspx" 
 ```
 
-##### Technique 7 - Webshell upload by abusing the insecure HTTP PUT method
+##### Technique 7 - Webshell upload by abusing the insecure HTTP PUT method (WebDAV)
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 	   - Examples with CURL
@@ -473,4 +473,15 @@ Example
 ➤ Apache(Unix) = “/usr/local/Apache2.2/htdocs”
 ➤ Apache(Windows) =  “C:/Program Files/Apache Software Foundation/Apache2.2/htdocs/”
 ➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
+```
+
+##### Usefull links for Webshells
+```
+➤ JAVA Webshell - https://github.com/SecurityRiskAdvisors/cmd.jsp
+➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
+➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
+➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
+➤ Various Webshells 
+  - https://github.com/tennc/webshell
+  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell
 ```
