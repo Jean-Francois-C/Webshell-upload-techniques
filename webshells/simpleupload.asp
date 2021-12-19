@@ -1,3 +1,4 @@
+<!-- from fuzzdb-webshell -->
 <%
 Set oScriptNet = Server.CreateObject("WSCRIPT.NETWORK")
 %>
