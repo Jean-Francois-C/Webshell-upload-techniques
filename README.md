@@ -9,12 +9,12 @@ Technique 4. Webshell upload using a WebLogic administration console
 Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
 Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
 Technique 7. Webshell upload by abusing the insecure HTTP PUT method
-Technique 8. Webshell upload by exploiting a website prone to a vulnerable file upload function
-Technique 9. Webshell upload by exploiting a website prone to a Remote File Include (RFI) vulnerability
-Technique 10. Webshell upload by exploiting a website prone to a Local File Include (LFI) vulnerability
-Technique 11. Webshell upload by exploiting a website prone to a SQL injection flaw (e.g., MS SQL database server and xp_cmdshell)
-Technique 12. Webshell upload by exploiting a website prone to a OS command execution flaw
-Technique 13. Webshell upload by exploiting a website prone to a Remote Code Execution vulnerability
+Technique 8. Webshell upload by exploiting a vulnerable file upload function
+Technique 9. Webshell upload by exploiting a remote file include (RFI) vulnerability
+Technique 10. Webshell upload by exploiting a local file include (LFI) vulnerability
+Technique 11. Webshell upload by exploiting a SQL injection (SQLi) vulnerability
+Technique 12. Webshell upload by exploiting a remote OS command execution vulnerability
+Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
 Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
 Technique 15. Webshell upload using a Lotus Domino admin console
 Technique 16. Webshell upload using a Jenkins admin console
