@@ -354,14 +354,18 @@ Example
 
 #### Technique 8 - Webshell upload by exploiting a vulnerable file upload function
 ```
-Example
-➤ Step 1. You found a vulnerable image file upload function "image_upload.php".
-           You tried to upload a php webshell named "Webshell.php" but it is rejected (only .png, .gif and .jpg files are accepted)
+Example with a vulnerable PHP website
 
-➤ Step 2. Simply modify the file extension of your webshell like "Webshell.php.png" to 'bypass' the file format check based on the file extension
+➤ Step 1. You found a file upload page "image_upload.php" and you tried to upload a webshell named "Webshell.php" but it was rejected.
+          Possible root causes:
+	   - only the file name extensions '.png', '.gif' and '.jpg' are accepted
+	   or
+	   - the file name extension '.php' is forbidden
+
+➤ Step 2. Simply modify the file extension of your webshell like "Webshell.php.png" or "Webshell.php5" or "Webshell.phtml" to bypass the checks based on the file extension
            - In general to bypass basic checks you can do the following:
- 	     + Append the name of the file extension of our webshell
-	     + Adjusting the content-type to match that of an accepted file-type
+ 	     + Append the name of the file extension of your webshell
+	     + Adjust the content-type to match that of an accepted file-type
 	     + Include magic bytes for an accepted file
 	    
            - Using Burp proxy send the following POST HTTP request:
