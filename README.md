@@ -19,7 +19,7 @@ I. Classic Webshell upload techniques
    ➤ Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
    ➤ Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
    ➤ Technique 15. Webshell upload using a Lotus Domino admin console
-   ➤ Technique 16. Webshell upload  using a Splunk administration console
+   ➤ Technique 16. Webshell upload using a Splunk administration console
    ➤ Technique 17. Webshell upload using a Jenkins admin console
    ➤ Technique 18. ...
 
