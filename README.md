@@ -550,6 +550,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
 ➤ PHP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php
 ➤ Various Webshells - https://github.com/tennc/webshell
+➤ Memory WebShell Generator - https://github.com/hosch3n/msmap
 ```
 
 ### IV. Quickly set up a test environment using Docker
