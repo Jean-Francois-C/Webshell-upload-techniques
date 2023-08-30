@@ -8,8 +8,8 @@ I. Classic Webshell upload techniques
    ➤ Technique 2. Webshell upload using an Apache Tomcat manager Web console
    ➤ Technique 3. Webshell upload using a JBoss administration JMX console
    ➤ Technique 4. Webshell upload using a WebLogic administration console
-   ➤ Technique 5. Webshell upload using a CMS Website admin console (e.g., WordPress)
-   ➤ Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e., C:\inetpub\wwwroot\ or /var/www/)
+   ➤ Technique 5. Webshell upload using a CMS Website admin console (e.g. WordPress, Kentico, Drupal)
+   ➤ Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e. C:\inetpub\wwwroot\ or /var/www/)
    ➤ Technique 7. Webshell upload by abusing the insecure HTTP PUT method
    ➤ Technique 8. Webshell upload by exploiting a vulnerable file upload function
    ➤ Technique 9. Webshell upload by exploiting a remote file include (RFI) vulnerability
@@ -218,8 +218,8 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 #### Technique 5 - Webshell upload by abusing a CMS Website admin console protected by a weak administrator password
 ##### <i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
 ``` 
-Example 1 - WorPress
----------------------
+Example 1 - WorPress CMS
+-------------------------
 ➤ Step 1. Enumerate WordPress users or Guess the Wordpress admin's login  
            - root@kali:~/# wpscan --url http://x.x.x.x.x --enumerate p,u,t,tt)
   
@@ -234,8 +234,8 @@ Example 1 - WorPress
            - http://x.x.x.x/login
   
 ➤ Step 4. Upload of a Webshell 
-           - Method 1 - Add a PHP webshell by editing a theme php page and adding the code of a PHP webshell (e.g. 404 error page)
-	                Go to 'Apparances' and then 'Editor' to edit a PHP page with a webshell or a reverseshell
+          - Method 1 - Add a PHP webshell by editing a theme php page and adding the code of a PHP webshell (e.g. 404 error page)
+                       Go to 'Apparances' and then 'Editor' to edit a PHP page with a webshell or a reverseshell
 
           - Method 2 - Upload of a PHP webshell by using the WordPress plugin upload page
 	               Examples:
@@ -245,11 +245,32 @@ Example 1 - WorPress
 	                 > Https://website/wordpress-blog/wp-content/uploads/webshell.php?cmd=whoami
 ``` 
 ``` 
-Example 2 - Kentico
---------------------
-➤ Step 1. Log into the Kentico admin console
+Example 2 - Drupal CMS
+-----------------------
+➤ Step 1. Log into the Drupal CMS website as admin (to have the privilege to install new modules)
+➤ Step 2. Click on the "Extend" tab and go to install new theme page (e.g. http://www.example.com/admin/modules/install)
+➤ Step 3. Create a directory with 3 files in it: a PHP shell, a module info and a htaccess file.
+➤ Step 4. Create a tarball of the directory (e.g. drupal_rce.tar.gz)
+➤ Step 5. Browse the tarball and upload it in the install module section
+➤ Step 6. Install the module
+➤ Step 7. Now visit the module page and execute OS commands via your webshell (e.g. http://www.example.com/modules/[module name]/webshell.php?cmd=whoami)
+``` 
+``` 
+Example 3 - Kentico CMS
+------------------------
+➤ Step 1. Log into the Kentico admin console (e.g. http://mysite.com/admin)
 ➤ Step 2. Edit the list file extensions allowed to add '.asp' and '.aspx'
 ➤ Step 3. upload a '.aspx' or '.asp' webshell using the CMS native upoad file function
+➤ Step 4. Now browse the webshell that you uploaded and execute OS commands
+```
+``` 
+Example 4 - DotNetNuke CMS (DNN)
+---------------------------------
+➤ Step 1. Log into the DotNetNuke CMS website as administrator
+➤ Step 2. Go to "In Settings -> Security -> More -> More Security Settings" and add new allowed file extensions under "Allowable File Extensions"
+           (i.e. add asp or aspx, and then click on the Save button).
+➤ Step 3. Then go to "/admin/file-management" and upload an asp webshell (e.g. webshell.asp).
+➤ Step 4. Finally, browse the page "/Portals/0/webshell.asp" to access your webshell and execute OS commands.
 ``` 
 
 #### Technique 6 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
