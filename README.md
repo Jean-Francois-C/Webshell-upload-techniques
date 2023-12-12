@@ -22,15 +22,15 @@ I. Classic Webshell upload techniques
    ➤ Technique 17. ...
 
 II. Classic Web RCE techniques
-   ➤ Technique 1. RCE using an IBM Domino Web administration console
-   ➤ Technique 2. RCE using a Jenkins web-based groovy script console
-   ➤ Technique 3. ...
+    ➤ Technique 1. RCE using an IBM Domino Web administration console
+    ➤ Technique 2. RCE using a Jenkins web-based groovy script console
+    ➤ Technique 3. ...
 
 III. List of common paths for the DocumentRoot directory (Web root folder)
 
-IV.  Usefull Github links for Webshells
+IV. Usefull Github links for Webshells
 
-V.  Quickly set up a test environment using Docker
+V. Quickly set up a test environment using Docker
 ```
 
 ### I. Classic Webshell upload techniques
