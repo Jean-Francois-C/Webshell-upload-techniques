@@ -6,7 +6,7 @@ I. Classic Webshell upload techniques
 
    ➤ Technique 1. Webshell upload using a PHPMyAdmin Web console
    ➤ Technique 2. Webshell upload using an Apache Tomcat manager Web console
-   ➤ Technique 3. Webshell upload using a JBoss administration JMX console
+   ➤ Technique 3. Webshell upload using a JBoss administration JMX Web console
    ➤ Technique 4. Webshell upload using a WebLogic administration console
    ➤ Technique 5. Webshell upload using a CMS Website admin console (e.g. WordPress, Kentico, Drupal)
    ➤ Technique 6. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e. C:\inetpub\wwwroot\ or /var/www/)
@@ -18,10 +18,11 @@ I. Classic Webshell upload techniques
    ➤ Technique 12. Webshell upload by exploiting a remote OS command execution vulnerability
    ➤ Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
    ➤ Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
-   ➤ Technique 15. Webshell upload using a Lotus Domino admin console
+   ➤ Technique 15. Webshell upload using a Lotus Domino administration console
    ➤ Technique 16. Webshell upload using a Splunk administration console
-   ➤ Technique 17. Webshell upload using a Jenkins admin console
-   ➤ Technique 18. ...
+   ➤ Technique 17. Webshell upload using a Jira administration console
+   ➤ Technique 18. Webshell upload using a Jenkins administration console
+   ➤ Technique 19. ...
 
 II. List of common paths for the DocumentRoot directory (Web root folder)
 
@@ -122,7 +123,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands
 ```
 
 
-#### Technique 3 - JBoss Administration JMX console
+#### Technique 3 - JBoss administration JMX console
 ```
 Example 1
 ---------
@@ -183,7 +184,7 @@ Example 2
 Other manual Webshell upload technique: https://securitysynapse.blogspot.com/2013/08/manually-exploiting-jboss-jmx-console.html
 ```
 
-#### Technique 4 - Weblogic Administration console
+#### Technique 4 - Weblogic administration console
 ```
 ➤ Step 1. Log into the Weblogic admin console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy 
@@ -550,6 +551,21 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
   - click on "Restart Splunk"
   - browse the new app (your Webshell)
 ```
+
+#### Technique 17 - Webshell upload  using a Jira administration console
+```
+➤ Step 1. Download a Webshell customized for Jira
+  - https://github.com/dubfr33/atlassian-webshell-plugin
+
+➤ Step 2. Log into a Jira instance as an administrator (e.g. default admin creds 'admin:admin' have not been changed)
+  - http://IP-or-Url/login.jsp or https://IP-or-Url/login.jsp 
+
+➤ Step 3. To deploy the Webshell you have to:
+  - browse the upload page "https://IP-or-Url/plugins/servlet/upm"
+  - then upload the Webshell plugin "atlassian-webshell-plugin\atlplug.jar"
+  - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
+```
+
 ### II. List of common paths for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
