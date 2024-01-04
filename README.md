@@ -606,11 +606,13 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ### IV Usefull Github links for Webshells
 ```
 ➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
+➤ ASPX Webshell - https://github.com/antonioCoco/SharPyShell
 ➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
 ➤ JAVA Webshell - https://github.com/SecurityRiskAdvisors/cmd.jsp
 ➤ JAVA Webshell - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/jsp
 ➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
 ➤ PHP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php
+➤ PHP Webshell  - https://github.com/bayufedra/Tiny-PHP-Webshell
 ➤ Various Webshells - https://github.com/tennc/webshell
 ➤ Memory WebShell Generator - https://github.com/hosch3n/msmap
 ```
