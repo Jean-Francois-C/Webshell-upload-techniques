@@ -14,4 +14,4 @@ Connection: close
 Cookie: PHPSESSID=gvhqh525l9eledr0ioknuku335;
 Upgrade-Insecure-Requests: 1
 
-/*
+*/
