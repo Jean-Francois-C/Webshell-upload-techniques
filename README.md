@@ -625,6 +625,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 | PHP | https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php |
 | PHP | https://github.com/bayufedra/Tiny-PHP-Webshell |
 | PHP | https://github.com/epinna/weevely3 |
+| PHP | https://www.acunetix.com/blog/articles/web-shells-101-using-php-introduction-web-shells-part-2/ https://www.acunetix.com/blog/articles/keeping-web-shells-undercover-an-introduction-to-web-shells-part-3/ |
 | Multiple types | https://github.com/hosch3n/msmap |
 
 -----------------
