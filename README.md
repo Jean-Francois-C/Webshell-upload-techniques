@@ -33,6 +33,8 @@ IV. Usefull Github links for Webshells
 V. Quickly set up a test environment using Docker
 ```
 
+-----------------
+
 ### I. Classic Webshell upload techniques
 #### Technique 1 - PHPMyAdmin Web console
 ```
@@ -568,6 +570,8 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 	   - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
 ```
 
+-----------------
+
 ### II. Classic Web RCE techniques
 #### Technique 1 - RCE using an IBM Domino Web administration console
 ```
@@ -591,6 +595,8 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 	   - print "ls /".execute().text					//for a Linux server
 ```
 
+-----------------
+
 ### III. List of common paths for the DocumentRoot directory (Web root folder)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
@@ -602,6 +608,8 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ Apache(Windows) =  “C:/Program Files/Apache Software Foundation/Apache2.2/htdocs/”
 ➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 ```
+
+-----------------
 
 ### IV. Usefull Github links for Webshells
 
@@ -618,6 +626,8 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 | PHP | https://github.com/bayufedra/Tiny-PHP-Webshell |
 | PHP | https://github.com/epinna/weevely3 |
 | Multiple types | https://github.com/hosch3n/msmap |
+
+-----------------
 
 ### V. Quickly set up a test environment using Docker
 #### Docker can be used to quickly set up a testing environment (https://hub.docker.com/search?q=)
