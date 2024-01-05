@@ -603,19 +603,21 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ NGINX (Linux) = '/data/www' or '/data/w3' or "/usr/local/nginx/html' (configuration files can be found in the directory: '/usr/local/nginx/conf' or /etc/nginx' or '/usr/local/etc/nginx')
 ```
 
-### IV Usefull Github links for Webshells
-```
-➤ ASPX Webshell - https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors
-➤ ASPX Webshell - https://github.com/antonioCoco/SharPyShell
-➤ ASP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp
-➤ JAVA Webshell - https://github.com/SecurityRiskAdvisors/cmd.jsp
-➤ JAVA Webshell - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/jsp
-➤ PHP Webshell  - https://github.com/WhiteWinterWolf/wwwolf-php-webshell
-➤ PHP Webshell  - https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php
-➤ PHP Webshell  - https://github.com/bayufedra/Tiny-PHP-Webshell
-➤ Various Webshells - https://github.com/tennc/webshell
-➤ Memory WebShell Generator - https://github.com/hosch3n/msmap
-```
+### IV. Usefull Github links for Webshells
+
+| Webshell | URL |
+| :-----: | :-----: |
+| All types | https://github.com/tennc/webshell |
+| .NET (ASPX) | https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors |
+| .NET (ASPX) | https://github.com/antonioCoco/SharPyShell |
+| .NET (ASP) | https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp |
+| JAVA | https://github.com/SecurityRiskAdvisors/cmd.jsp |
+| JAVA | https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/jsp |
+| PHP | https://github.com/WhiteWinterWolf/wwwolf-php-webshell |
+| PHP | https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/php |
+| PHP | https://github.com/bayufedra/Tiny-PHP-Webshell |
+| PHP | https://github.com/epinna/weevely3 |
+| Multiple types | https://github.com/hosch3n/msmap |
 
 ### V. Quickly set up a test environment using Docker
 #### Docker can be used to quickly set up a testing environment (https://hub.docker.com/search?q=)
