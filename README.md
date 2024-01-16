@@ -635,6 +635,9 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 | Webshell | URL |
 | :-----: | :-----: |
 | All types | https://github.com/tennc/webshell |
+| All types | https://github.com/xl7dev/WebShell | 	
+| All types | https://github.com/BlackArch/webshells/tree/master |
+| All types | https://github.com/alphaSeclab/awesome-webshell/ |
 | .NET (ASPX) | https://github.com/tennc/webshell/tree/master/aspx/asp.net-backdoors |
 | .NET (ASPX) | https://github.com/antonioCoco/SharPyShell |
 | .NET (ASP) | https://github.com/tennc/webshell/tree/master/fuzzdb-webshell/asp |
@@ -645,6 +648,8 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 | PHP | https://github.com/bayufedra/Tiny-PHP-Webshell |
 | PHP | https://github.com/epinna/weevely3 |
 | PHP | https://www.acunetix.com/blog/articles/web-shells-101-using-php-introduction-web-shells-part-2/ https://www.acunetix.com/blog/articles/keeping-web-shells-undercover-an-introduction-to-web-shells-part-3/ |
+| Nodejs | https://github.com/Zibri/wshell3 |
+| Multiple types | https://github.com/EatonChips/wsh |
 | Multiple types | https://github.com/hosch3n/msmap |
 
 -----------------
