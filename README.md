@@ -663,7 +663,7 @@ Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewSt
              __VIEWSTATE=<signed-payload-generated-with-yoserial>&__VIEWSTATEGENERATOR=306A601A&__EVENTVALIDATION=<SNIP>&<SNIP>
 ```
 ```
-Example 2 - Context: Any .Net framework < 4,5 and EnableViewStateMac=False and ViewStateEncryptionMode=false
+Example 2 - Context: Any .Net framework version and EnableViewStateMac=False and ViewStateEncryptionMode=false
 
 ➤ Step 1. Identify that both the ViewState MAC and encryption are disabled for a target .Net Web application using the Burp Web proxy
 
