@@ -12,14 +12,14 @@
 - [Technique 7 - Webshell upload using a WORDPRESS CMS Website admin console](#Technique-7-Webshell-upload-using-a-WORDPRESS-CMS-Website-admin-console)
 - [Technique 8 - Webshell upload using a DRUPAL CMS Website admin console](#Technique-8-Webshell-upload-using-a-DRUPAL-CMS-Website-admin-console)
 - [Technique 9 - Webshell upload using a KENTICO CMS Website admin console](#Technique-9-Webshell-upload-using-a-KENTICO-CMS-Website-admin-console)
-- [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DNN-(DotNetNuke)-CMS-Website-admin-console)
+- [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DotNetNuke-DNN-CMS-Website-admin-console)
 - [Technique 11 - Webshell upload using a JOOMLA CMS Website admin console](#Technique-11-Webshell-upload-using-a-JOOMLA-CMS-Website-admin-console)
 - [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server)
 - [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method (Webdav)](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
 - [Technique 14 - Webshell upload by exploiting a vulnerable file upload function](#Technique-14-Webshell-upload-by-exploiting-a-vulnerable-file-upload-function)
-- [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-(RFI)-vulnerability)
-- [Technique 16 - Webshell upload by exploiting a local file include (LFI) vulnerability](#Technique-16-Webshell-upload-by-exploiting-a-local-file-include-(LFI)-vulnerability)
-- [Technique 17 - Webshell upload by exploiting a SQL injection (SQLi) vulnerability](#Technique-17-Webshell-upload-by-exploiting-a-SQL-injection-(SQLi)-vulnerability)
+- [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-RFI-vulnerability)
+- [Technique 16 - Webshell upload by exploiting a local file include (LFI) vulnerability](#Technique-16-Webshell-upload-by-exploiting-a-local-file-include-LFI-vulnerability)
+- [Technique 17 - Webshell upload by exploiting a SQL injection (SQLi) vulnerability](#Technique-17-Webshell-upload-by-exploiting-a-SQL-injection-SQLi-vulnerability)
 - Technique 18 - Webshell upload by exploiting a remote OS command execution vulnerability
 - Technique 19 - Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
 - Technique 20 - Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
@@ -297,7 +297,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 4. Now browse the webshell that you uploaded and execute OS commands
 ```
 
-#### Technique 10. Webshell upload using a DNN (DotNetNuke) CMS Website admin consol
+#### Technique 10. Webshell upload using a DotNetNuke DNN CMS Website admin console
 ``` 
 ➤ Step 1. Log into the DotNetNuke CMS website as administrator
 ➤ Step 2. Go to "In Settings -> Security -> More -> More Security Settings" and add new allowed file extensions under "Allowable File Extensions"
