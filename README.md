@@ -21,7 +21,7 @@
 - [Technique 16 - Webshell upload by exploiting a local file include (LFI) vulnerability](#Technique-16-Webshell-upload-by-exploiting-a-local-file-include-LFI-vulnerability)
 - [Technique 17 - Webshell upload by exploiting a SQL injection (SQLi) vulnerability](#Technique-17-Webshell-upload-by-exploiting-a-SQL-injection-SQLi-vulnerability)
 - Technique 18 - Webshell upload by exploiting a remote OS command execution vulnerability
-- Technique 19 - Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
+- Technique 19 - Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, OGNL injection)
 - Technique 20 - Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
 - ...
 
