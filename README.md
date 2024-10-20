@@ -31,10 +31,9 @@
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - Technique 4. ...
 
-#### III. List of common paths for the DocumentRoot directory (Web root directory) [Link](#III-List-of-common-paths-for-the-DocumentRoot-directory-(Web-root-directory))
-
-#### IV. Usefull Github links for Webshells
-#### V. Quickly set up a test environment using Docker
+#### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
+#### IV. Usefull Github links for Webshells [LINK](#IV-Usefull-Github-links-for-Webshells)
+#### V. Quickly set up a test environment using Docker [LINK](#V-Quickly-set-up-a-test-environment-using-Docker)
 
 -----------------
 
@@ -252,7 +251,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 	   - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
 ```
 #### Technique 7. Webshell upload using a WORDPRESS CMS Website admin console
-##### <i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
+##### <i/>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
 ``` 
 ➤ Step 1. Enumerate WordPress users or Guess the Wordpress admin's login  
            - root@kali:~/# wpscan --url http://x.x.x.x.x --enumerate p,u,t,tt)
@@ -328,8 +327,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ``` 
 
 #### Technique 12. Webshell upload by exploiting an insecure writable file share of a Web server root directory
-<i/> Common Web server root directory = 'C:\inetpub\wwwroot\' or '/var/www/'. </i>
-<i/> Potential insecure writable file share = FTP file share or CIFS/SMB file share or SAMBA file share or NFS file share ... <i/> 
+##### <i>Common Web server root directory = 'C:\inetpub\wwwroot\' or '/var/www/'. Potential insecure writable file share = FTP file share or CIFS/SMB file share or SAMBA file share or NFS file share ... </i> 
 ```
 Example
 ➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
