@@ -14,7 +14,7 @@
 - [Technique 9 - Webshell upload using a KENTICO CMS Website admin console](#Technique-9-Webshell-upload-using-a-KENTICO-CMS-Website-admin-console)
 - [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DotNetNuke-DNN-CMS-Website-admin-console)
 - [Technique 11 - Webshell upload using a JOOMLA CMS Website admin console](#Technique-11-Webshell-upload-using-a-JOOMLA-CMS-Website-admin-console)
-- [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server)
+- [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server-root-directory)
 - [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method (Webdav)](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
 - [Technique 14 - Webshell upload by exploiting a vulnerable file upload function](#Technique-14-Webshell-upload-by-exploiting-a-vulnerable-file-upload-function)
 - [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-RFI-vulnerability)
@@ -327,7 +327,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ``` 
 
 #### Technique 12. Webshell upload by exploiting an insecure writable file share of a Web server root directory
-| Common Web server root directory = C:\inetpub\wwwroot\ or /var/www/ or ...
+<i/> Common Web server root directory = C:\inetpub\wwwroot\ or /var/www/ or ... </i>
 ```
 Example
 ➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
@@ -341,7 +341,7 @@ Example
 ```
 
 #### Technique 13. Webshell upload by abusing the insecure HTTP PUT method
-| The HTTP PUT method is also known as one of Webdav methods
+<i/> Note: The HTTP PUT method is also known as one of the Webdav methods </i>
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 	   - Examples with CURL
