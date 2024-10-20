@@ -31,7 +31,8 @@
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - Technique 4. ...
 
-#### III. List of common paths for the DocumentRoot directory (Web root directory)
+#### III. List of common paths for the DocumentRoot directory (Web root directory) [Link](#III-List-of-common-paths-for-the-DocumentRoot-directory-(Web-root-directory))
+
 #### IV. Usefull Github links for Webshells
 #### V. Quickly set up a test environment using Docker
 
