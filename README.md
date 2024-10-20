@@ -14,7 +14,7 @@
 - [Technique 9 - Webshell upload using a KENTICO CMS Website admin console](#Technique-9-Webshell-upload-using-a-KENTICO-CMS-Website-admin-console)
 - [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DotNetNuke-DNN-CMS-Website-admin-console)
 - [Technique 11 - Webshell upload using a JOOMLA CMS Website admin console](#Technique-11-Webshell-upload-using-a-JOOMLA-CMS-Website-admin-console)
-- [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server-root-directory)
+- [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (e.g. FTP/CIFS/SMB/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server-root-directory)
 - [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method (Webdav)](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
 - [Technique 14 - Webshell upload by exploiting a vulnerable file upload function](#Technique-14-Webshell-upload-by-exploiting-a-vulnerable-file-upload-function)
 - [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-RFI-vulnerability)
