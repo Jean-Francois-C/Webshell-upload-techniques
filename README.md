@@ -328,6 +328,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 
 #### Technique 12. Webshell upload by exploiting an insecure writable file share of a Web server root directory
 <i/> Common Web server root directory = C:\inetpub\wwwroot\ or /var/www/ or ... </i>
+<i/> Potential insecure writable file share = FTP file share or CIFS/SMB file share or SAMBA file share or NFS file share ... <i/> 
 ```
 Example
 ➤ Step 1. Identify a file share of a Web server that is insecurely granting read & write permissions to all "Domain Users" over the folder 'C:\inetpub\wwwroot\'
