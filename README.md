@@ -1,42 +1,39 @@
-# Webshell upload techniques
+# Webshell upload techniques & Web RCE techniques
 
-### INDEX
-```
-I. Classic Webshell upload techniques
-   ➤ Technique 1. Webshell upload using a PHPMYADMIN Web console
-   ➤ Technique 2. Webshell upload using an APACHE TOMCAT manager Web console
-   ➤ Technique 3. Webshell upload using a JBOSS administration JMX Web console
-   ➤ Technique 4. Webshell upload using a WEBLOGIC administration console
-   ➤ Technique 5. Webshell upload using a SPLUNK administration console
-   ➤ Technique 6. Webshell upload using a JIRA administration console
-   ➤ Technique 7. Webshell upload using a WORDPRESS CMS Website admin console
-   ➤ Technique 8. Webshell upload using a DRUPAL CMS Website admin console
-   ➤ Technique 9. Webshell upload using a KENTICO CMS Website admin console
-   ➤ Technique 10. Webshell upload using a DNN (DotNetNuke) CMS Website admin console
-   ➤ Technique 11. Webshell upload using a JOOMLA CMS Website admin console
-   ➤ Technique 12. Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server (i.e. C:\inetpub\wwwroot\ or /var/www/)
-   ➤ Technique 13. Webshell upload by abusing the insecure HTTP PUT method
-   ➤ Technique 14. Webshell upload by exploiting a vulnerable file upload function
-   ➤ Technique 15. Webshell upload by exploiting a remote file include (RFI) vulnerability
-   ➤ Technique 16. Webshell upload by exploiting a local file include (LFI) vulnerability
-   ➤ Technique 17. Webshell upload by exploiting a SQL injection (SQLi) vulnerability
-   ➤ Technique 18. Webshell upload by exploiting a remote OS command execution vulnerability
-   ➤ Technique 19. Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
-   ➤ Technique 20. Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
-   ➤ Technique 21. ...
+### Table of contents 
 
-II. Classic Web RCE techniques
-    ➤ Technique 1. RCE using an IBM Domino Web administration console
-    ➤ Technique 2. RCE using a Jenkins web-based groovy script console
-    ➤ Technique 3. RCE using a Liferay CMS web-based groovy script console
-    ➤ Technique 4. ...
+#### I. Classic Webshell upload techniques
+- [Technique 1 - Webshell upload using a PHPMYADMIN Web console](#Technique-1-Webshell-upload-using-a-PHPMYADMIN-Web-console)
+- [Technique 2 - Webshell upload using an APACHE TOMCAT manager Web console](#Technique-2-Webshell-upload-using-an-APACHE-TOMCAT-manager-Web-console)
+- [Technique 3 - Webshell upload using a JBOSS administration JMX Web console](#Technique-3-Webshell-upload-using-a-JBOSS-administration-JMX-Web-console)
+- [Technique 4 - Webshell upload using a WEBLOGIC administration console](#Technique-4-Webshell-upload-using-a-WEBLOGIC-administration-console)
+- [Technique 5 - Webshell upload using a SPLUNK Web administration console](#Technique-5-Webshell-upload-using-a-SPLUNK-administration-console)
+- [Technique 6- Webshell upload using a JIRA Web administration console](#Technique-6-Webshell-upload-using-a-JIRA-administration-console)
+- [Technique 7 - Webshell upload using a WORDPRESS CMS Website admin console](#Technique-7-Webshell-upload-using-a-WORDPRESS-CMS-Website-admin-console)
+- [Technique 8 - Webshell upload using a DRUPAL CMS Website admin console](#Technique-8-Webshell-upload-using-a-DRUPAL-CMS-Website-admin-console)
+- [Technique 9 - Webshell upload using a KENTICO CMS Website admin console](#Technique-9-Webshell-upload-using-a-KENTICO-CMS-Website-admin-console)
+- [Technique 10 - Webshell upload using a DNN (DotNetNuke) CMS Website admin console](#Technique-10-Webshell-upload-using-a-DNN-(DotNetNuke)-CMS-Website-admin-console)
+- [Technique 11 - Webshell upload using a JOOMLA CMS Website admin console](#Technique-11-Webshell-upload-using-a-JOOMLA-CMS-Website-admin-console)
+- [Technique 12 - Webshell upload by exploiting an insecure (writable) file share (FTP/CIFS/SAMBA/NFS) of a Web server root directory](#Technique-12-Webshell-upload-by-exploiting-an-insecure-writable-file-share-of-a-Web-server)
+- [Technique 13 - Webshell upload by abusing the insecure HTTP PUT method](#Technique-13-Webshell-upload-by-abusing-the-insecure-HTTP-PUT-method)
+- [Technique 14 - Webshell upload by exploiting a vulnerable file upload function](#Technique-14-Webshell-upload-by-exploiting-a-vulnerable-file-upload-function)
+- [Technique 15 - Webshell upload by exploiting a remote file include (RFI) vulnerability](#Technique-15-Webshell-upload-by-exploiting-a-remote-file-include-(RFI)-vulnerability)
+- [Technique 16 - Webshell upload by exploiting a local file include (LFI) vulnerability](#Technique-16-Webshell-upload-by-exploiting-a-local-file-include-(LFI)-vulnerability)
+- [Technique 17 - Webshell upload by exploiting a SQL injection (SQLi) vulnerability](#Technique-17-Webshell-upload-by-exploiting-a-SQL-injection-(SQLi)-vulnerability)
+- Technique 18 - Webshell upload by exploiting a remote OS command execution vulnerability
+- Technique 19 - Webshell upload by exploiting a remote code execution (RCE) vulnerability (e.g. insecure deserialization, )
+- Technique 20 - Webshell upload by exploiting an insecure CKEditor (WYSIWYG HTML Editor with Collaborative Rich Text Editing)
+- ...
 
-III. List of common paths for the DocumentRoot directory (Web root folder)
+#### II. Classic Web RCE techniques
+- [Technique 1 - RCE using an IBM Domino Web administration console](#Technique-1-RCE-using-an-IBM-Domino-Web-administration-console)
+- [Technique 2 - RCE using a Jenkins web-based groovy script console](#Technique-2-RCE-using-a-Jenkins-web-based-groovy-script-console)
+- [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
+- Technique 4. ...
 
-IV. Usefull Github links for Webshells
-
-V. Quickly set up a test environment using Docker
-```
+#### III. List of common paths for the DocumentRoot directory (Web root directory)
+#### IV. Usefull Github links for Webshells
+#### V. Quickly set up a test environment using Docker
 
 -----------------
 
@@ -634,7 +631,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 
 -----------------
 
-### III. List of common paths for the DocumentRoot directory (Web root folder)
+### III. List of common paths for the DocumentRoot directory (Web root directory)
 ```
 ➤ XAMP (Windows) = "c:\XAMPP\htdocs"
 ➤ IIS (Windows) = "C:\inetpub\wwwroot"
