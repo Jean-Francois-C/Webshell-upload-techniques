@@ -1,4 +1,4 @@
-# Webshell upload techniques & Web RCE techniques
+## Webshell upload techniques & Web RCE techniques
 
 ### Table of contents 
 
@@ -38,7 +38,7 @@
 -----------------
 
 ### I. Classic Webshell upload techniques
-#### Technique 1 - PHPMyAdmin Web console
+#### Technique 1. Webshell upload using a PHPMYADMIN Web console
 ```
 ➤ Step 1. Log into the PHPMyAdmin Web console by exploiting the presence of default or easy guessable credentials,
 	   anonymous access or by performing a brute-force or dictionnary password attack using Burp proxy
