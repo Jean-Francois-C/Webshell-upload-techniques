@@ -31,7 +31,7 @@
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
 - [Technique 5 - RCE by exploiting PHP wrappers in PHP Web applications](#Technique-5-RCE-by-exploiting-PHP-wrappers-in-PHP-Web-applications)
-- [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-API-Java-RMI-)
+- [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-API-Java-RMI)
 - Technique 7 - ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
